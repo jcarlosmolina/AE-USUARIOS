@@ -52,6 +52,7 @@ import com.keralty.aeusuarios.sqlutils.SQLWhereConjunction;
 import com.keralty.aeusuarios.sqlutils.SQLWhereDisjunction;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandLiteral;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandPathAttribute;
+import com.keralty.aeusuarios.utils.Utilities;
 import com.keralty.aeusuarios.viewmodel.FilterRequest;
 import com.keralty.aeusuarios.viewmodel.FilterVariableRequest;
 import com.keralty.aeusuarios.viewmodel.InstanceResponseViewModel;
@@ -1608,7 +1609,7 @@ public class AsesorService extends AbstractService {
         step2Request.setFuncionariosincronizarAsesorpSegundoApellido(asesorTSINCRONIZARptpSegundoApellido);
         funcionarioSrv.sincronizarAsesorImplementation(step2Request);
 
-        boolean guard3 = !(asesorTSINCRONIZARpthisAsesor.getSucursal().equalsObject(asesorTSINCRONIZARptpevcSucursal));
+        boolean guard3 = !Utilities.isEqual(asesorTSINCRONIZARpthisAsesor.getSucursal(), asesorTSINCRONIZARptpevcSucursal);
 
         if (guard3) {
             com.keralty.aeusuarios.viewmodel.funcionario.siu.CambSucursalAgenteRequest step3Request = new com.keralty.aeusuarios.viewmodel.funcionario.siu.CambSucursalAgenteRequest();
@@ -1618,7 +1619,7 @@ public class AsesorService extends AbstractService {
         }
 
         /* Action 4: IF (TipoIdentificacion <> pTipoIdentificacion) */
-        boolean ifCondition4 = !(asesorTSINCRONIZARpthisAsesor.getTipoIdentificacion().equalsObject(asesorTSINCRONIZARpTipoIdentificacion));
+        boolean ifCondition4 = !Utilities.isEqual(asesorTSINCRONIZARpthisAsesor.getTipoIdentificacion(), asesorTSINCRONIZARpTipoIdentificacion);
         if (ifCondition4) {
             /* Action 40: IF (EXIST (TipoIdentificacion) = true) */
             boolean ifCondition40 = repository.assocOperator002(asesorTSINCRONIZARpthisAsesor).equals(true);
@@ -1938,7 +1939,7 @@ public class AsesorService extends AbstractService {
         asesorSrv.marcarEsDirectorImplementation(step6Request);
 
         /* Action 7: IF (Sucursal <> ptSucursal) */
-        boolean ifCondition7 = !(asesorTMODIFICARASESORAGENCIApthisAsesor.getSucursal().equalsObject(asesorTMODIFICARASESORAGENCIAptSucursal));
+        boolean ifCondition7 = !Utilities.isEqual(asesorTMODIFICARASESORAGENCIApthisAsesor.getSucursal(), asesorTMODIFICARASESORAGENCIAptSucursal);
         if (ifCondition7) {
             com.keralty.aeusuarios.viewmodel.funcionario.siu.CambSucursalAgenteRequest step70Request = new com.keralty.aeusuarios.viewmodel.funcionario.siu.CambSucursalAgenteRequest();
             step70Request.setFuncionarioCambSucursalAgentepthisAgenteInstance(asesorTMODIFICARASESORAGENCIApthisAsesor.getFuncionarioFacet());
@@ -1947,7 +1948,7 @@ public class AsesorService extends AbstractService {
         }
 
         /* Action 8: IF (TipoIdentificacion <> ptTipoIdentificacion) */
-        boolean ifCondition8 = !(asesorTMODIFICARASESORAGENCIApthisAsesor.getTipoIdentificacion().equalsObject(asesorTMODIFICARASESORAGENCIAptTipoIdentificacion));
+        boolean ifCondition8 = !Utilities.isEqual(asesorTMODIFICARASESORAGENCIApthisAsesor.getTipoIdentificacion(), asesorTMODIFICARASESORAGENCIAptTipoIdentificacion);
         if (ifCondition8) {
             /* Action 80: IF (EXIST (TipoIdentificacion) = true) */
             boolean ifCondition80 = repository.assocOperator004(asesorTMODIFICARASESORAGENCIApthisAsesor).equals(true);

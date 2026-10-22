@@ -17,6 +17,7 @@ import com.keralty.aeusuarios.persistence.oid.DominioOid;
 import com.keralty.aeusuarios.persistence.oid.ProductosOid;
 import com.keralty.aeusuarios.repository.AsesorJpaRepository;
 import com.keralty.aeusuarios.repository.ProductosJpaRepository;
+import com.keralty.aeusuarios.utils.Utilities;
 import io.quarkus.arc.Arc;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -748,7 +749,7 @@ public class AgentexProducto extends AbstractAppEntity {
             Asesor = agent OR Asesor.CodJefe = Agent.Usuario
             */
             try {
-                if (this.getAsesor().equalsObject(agentInstance) || (this.getAsesor().getFuncionarioCodJefe()).equals(agentInstance.getFuncionarioUsuario())) {
+                if (Utilities.isEqual(this.getAsesor(), agentInstance) || (this.getAsesor().getFuncionarioCodJefe()).equals(agentInstance.getFuncionarioUsuario())) {
                     returnValue = true;
                 }
             } catch (Exception e) {

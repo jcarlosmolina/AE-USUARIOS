@@ -27,6 +27,7 @@ import com.keralty.aeusuarios.sqlutils.SQLWhereOperandLiteral;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandOVParameter;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandPathAttribute;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandPathInstance;
+import com.keralty.aeusuarios.utils.Utilities;
 import com.keralty.aeusuarios.viewmodel.FilterRequest;
 import com.keralty.aeusuarios.viewmodel.FilterVariableRequest;
 import com.keralty.aeusuarios.viewmodel.InstanceResponseViewModel;
@@ -877,7 +878,7 @@ public class AgentexProductoService extends AbstractService {
         agentexProductoSrv.sincronizarImplementation(step1Request);
 
         /* Action 2: IF (ProductoT <> pProducto) */
-        boolean ifCondition2 = !(agentexProductoTSINCRONIZARpthisAgentexProducto.getProductoT().equalsObject(agentexProductoTSINCRONIZARpProducto));
+        boolean ifCondition2 = !Utilities.isEqual(agentexProductoTSINCRONIZARpthisAgentexProducto.getProductoT(), agentexProductoTSINCRONIZARpProducto);
         if (ifCondition2) {
             com.keralty.aeusuarios.viewmodel.agentexproducto.siu.CambProductoDeAsesorxProductoRequest step20Request = new com.keralty.aeusuarios.viewmodel.agentexproducto.siu.CambProductoDeAsesorxProductoRequest();
             step20Request.setAgentexProductoCambProductoDeAsesorxProductopthisAgentexProductoInstance(agentexProductoTSINCRONIZARpthisAgentexProducto);

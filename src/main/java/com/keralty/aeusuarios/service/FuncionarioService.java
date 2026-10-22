@@ -67,6 +67,7 @@ import com.keralty.aeusuarios.sqlutils.SQLWhereOperandOVParameter;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandPathAttribute;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandSubQuery;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandThis;
+import com.keralty.aeusuarios.utils.Utilities;
 import com.keralty.aeusuarios.viewmodel.FilterRequest;
 import com.keralty.aeusuarios.viewmodel.FilterVariableRequest;
 import com.keralty.aeusuarios.viewmodel.InstanceResponseViewModel;
@@ -3633,7 +3634,7 @@ public class FuncionarioService extends AbstractService {
         }
 
         /* Action 16: IF (Rol <> ptNuevoRol) */
-        boolean ifCondition16 = !(funcionarioTMODIFICARYROLpthisAgente.getRol().equalsObject(funcionarioTMODIFICARYROLptNuevoRol));
+        boolean ifCondition16 = !Utilities.isEqual(funcionarioTMODIFICARYROLpthisAgente.getRol(), funcionarioTMODIFICARYROLptNuevoRol);
         if (ifCondition16) {
             com.keralty.aeusuarios.viewmodel.funcionario.siu.CambRolAgenteRequest step160Request = new com.keralty.aeusuarios.viewmodel.funcionario.siu.CambRolAgenteRequest();
             step160Request.setFuncionarioCambRolAgentepthisAgenteInstance(funcionarioTMODIFICARYROLpthisAgente);

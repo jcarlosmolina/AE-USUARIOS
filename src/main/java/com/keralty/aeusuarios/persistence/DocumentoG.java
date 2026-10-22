@@ -13,6 +13,7 @@ import com.keralty.aeusuarios.persistence.oid.DocumentoGOid;
 import com.keralty.aeusuarios.persistence.oid.ObsEstadoOid;
 import com.keralty.aeusuarios.persistence.oid.PersonaOid;
 import com.keralty.aeusuarios.persistence.oid.SolicitudOid;
+import com.keralty.aeusuarios.utils.Utilities;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -1103,7 +1104,7 @@ public class DocumentoG extends AbstractAppEntity {
             Solicitud.Agente = agent OR Solicitud.Agente.CodJefe = Agent.Usuario
             */
             try {
-                if (this.getSolicitud().getAgente().equalsObject(agentInstance) || (this.getSolicitud().getAgente().getFuncionarioCodJefe()).equals(agentInstance.getFuncionarioUsuario())) {
+                if (Utilities.isEqual(this.getSolicitud().getAgente(), agentInstance) || (this.getSolicitud().getAgente().getFuncionarioCodJefe()).equals(agentInstance.getFuncionarioUsuario())) {
                     returnValue = true;
                 }
             } catch (Exception e) {

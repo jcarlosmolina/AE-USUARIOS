@@ -156,6 +156,11 @@ public class GlobalServicesService extends AbstractService {
             com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINCPRODUCTOSRequest request) throws ModelException, SystemException {
         ServiceResponse response = new ServiceResponse();
 
+        if (request == null) {
+            throw new IllegalArgumentException("Invalid request to tGSINCPRODUCTOSImplementation");
+        }
+
+
         com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1PRODUCTORequest step1Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1PRODUCTORequest();
         step1Request.setTGSINC1PRODUCTOptpatrNumero(Long.valueOf(0));
         step1Request.setTGSINC1PRODUCTOptpatrDescripcion("0");
@@ -276,6 +281,11 @@ public class GlobalServicesService extends AbstractService {
     public ServiceResponse oGSINCSUCURSALESImplementation(
             com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCSUCURSALESRequest request) throws ModelException, SystemException {
         ServiceResponse response = new ServiceResponse();
+
+        if (request == null) {
+            throw new IllegalArgumentException("Invalid request to oGSINCSUCURSALESImplementation");
+        }
+
 
         com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1SUCURSALRequest step1Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1SUCURSALRequest();
         step1Request.setTGSINC1SUCURSALptpatrCodigo(Long.valueOf(0));
@@ -473,6 +483,11 @@ public class GlobalServicesService extends AbstractService {
             com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCASESORESRequest request) throws ModelException, SystemException {
         com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCASESORESResponse response = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCASESORESResponse();
 
+        if (request == null) {
+            throw new IllegalArgumentException("Invalid request to oGSINCASESORESImplementation");
+        }
+
+
         try {
             com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCSUCURSALESRequest step1Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCSUCURSALESRequest();
             globalServicesSrv.oGSINCSUCURSALESTxn(step1Request);
@@ -608,6 +623,11 @@ public class GlobalServicesService extends AbstractService {
     public ServiceResponse tGSINCTIPOSIDENTIFICACIONImplementation(
             com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINCTIPOSIDENTIFICACIONRequest request) throws ModelException, SystemException {
         ServiceResponse response = new ServiceResponse();
+
+        if (request == null) {
+            throw new IllegalArgumentException("Invalid request to tGSINCTIPOSIDENTIFICACIONImplementation");
+        }
+
 
         com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1TIPOIDENTIFICACIONRequest step1Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1TIPOIDENTIFICACIONRequest();
         step1Request.setTGSINC1TIPOIDENTIFICACIONptpatrCodigo(Long.valueOf(0));
@@ -746,6 +766,11 @@ public class GlobalServicesService extends AbstractService {
     public ServiceResponse oGSINCAGENTESXPRODImplementation(
             com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCAGENTESXPRODRequest request) throws ModelException, SystemException {
         ServiceResponse response = new ServiceResponse();
+
+        if (request == null) {
+            throw new IllegalArgumentException("Invalid request to oGSINCAGENTESXPRODImplementation");
+        }
+
 
         try {
             com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1AGENTEXPRODRequest step1Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1AGENTEXPRODRequest();
@@ -961,6 +986,11 @@ public class GlobalServicesService extends AbstractService {
     public ServiceResponse tGPOSPROCESARASESORESImplementation(
             com.keralty.aeusuarios.viewmodel.globalservices.siu.TGPOSPROCESARASESORESRequest request) throws ModelException, SystemException {
         ServiceResponse response = new ServiceResponse();
+
+        if (request == null) {
+            throw new IllegalArgumentException("Invalid request to tGPOSPROCESARASESORESImplementation");
+        }
+
 
         for(Asesor step1Entity : globalServicesRepository.assocOperator117()) {
             com.keralty.aeusuarios.viewmodel.asesor.siu.TPOSPROCESOSINCRequest step1Request = new com.keralty.aeusuarios.viewmodel.asesor.siu.TPOSPROCESOSINCRequest();

@@ -52,6 +52,7 @@ import com.keralty.aeusuarios.sqlutils.SQLWhereOperandLiteral;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandOVParameter;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandPathAttribute;
 import com.keralty.aeusuarios.sqlutils.SQLWhereOperandThis;
+import com.keralty.aeusuarios.utils.Utilities;
 import com.keralty.aeusuarios.viewmodel.FilterRequest;
 import com.keralty.aeusuarios.viewmodel.FilterVariableRequest;
 import com.keralty.aeusuarios.viewmodel.InstanceResponseViewModel;
@@ -642,7 +643,7 @@ public class RespRegionalService extends AbstractService {
         funcionarioSrv.modificarImplementation(step1Request);
 
         /* Action 2: IF (Regional <> ptpevcRegional) */
-        boolean ifCondition2 = !(respRegionalTMODIFICARpthisRespRegional.getRegional().equalsObject(respRegionalTMODIFICARptpevcRegional));
+        boolean ifCondition2 = !Utilities.isEqual(respRegionalTMODIFICARpthisRespRegional.getRegional(), respRegionalTMODIFICARptpevcRegional);
         if (ifCondition2) {
             /* Action 20: IF (EXIST (Regional) = true) */
             boolean ifCondition20 = repository.assocOperator001(respRegionalTMODIFICARpthisRespRegional).equals(true);
