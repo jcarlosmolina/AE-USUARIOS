@@ -2392,6 +2392,18 @@ public class AsesorService extends AbstractService {
         Funcionario funcionariohacerAsesorpthisAgente = request.getFuncionariohacerAsesorpthisAgenteInstance();
         String funcionariohacerAsesorpCodJefe = request.getFuncionariohacerAsesorpCodJefe();
         TipoIdentificacion funcionariohacerAsesorpagrTipoIdentificacion = request.getFuncionariohacerAsesorpagrTipoIdentificacionInstance();
+        Boolean funcionariohacerAsesorpatrmodificaDirector = request.getFuncionariohacerAsesorpatrmodificaDirector();
+        Boolean funcionariohacerAsesorpatresDirector = request.getFuncionariohacerAsesorpatresDirector();
+        String funcionariohacerAsesorpatrNumIdentificacion = request.getFuncionariohacerAsesorpatrNumIdentificacion();
+        Boolean funcionariohacerAsesorpatrModDBasicosPersona = request.getFuncionariohacerAsesorpatrModDBasicosPersona();
+        Boolean funcionariohacerAsesorpatrEsIntegral = request.getFuncionariohacerAsesorpatrEsIntegral();
+        Boolean funcionariohacerAsesorpatrVerDBasicosPersona = request.getFuncionariohacerAsesorpatrVerDBasicosPersona();
+        Boolean funcionariohacerAsesorpatrVerDocIdentificacionPerso = request.getFuncionariohacerAsesorpatrVerDocIdentificacionPerso();
+        Boolean funcionariohacerAsesorpatrVerContratoNovedad = request.getFuncionariohacerAsesorpatrVerContratoNovedad();
+        String funcionariohacerAsesorpatrCanalComercial = request.getFuncionariohacerAsesorpatrCanalComercial();
+        String funcionariohacerAsesorpatrCargo = request.getFuncionariohacerAsesorpatrCargo();
+        String funcionariohacerAsesorpatrEstado = request.getFuncionariohacerAsesorpatrEstado();
+        Boolean funcionariohacerAsesorpatrAccesoValidadorUsuarios = request.getFuncionariohacerAsesorpatrAccesoValidadorUsuarios();
 
         request.checkArguments();
         Asesor instance = new Asesor();
