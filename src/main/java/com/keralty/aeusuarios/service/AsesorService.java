@@ -2390,7 +2390,6 @@ public class AsesorService extends AbstractService {
             com.keralty.aeusuarios.viewmodel.funcionario.siu.HacerAsesorRequest request) throws ModelException {
         ServiceResponse response = new ServiceResponse();
         Funcionario funcionariohacerAsesorpthisAgente = request.getFuncionariohacerAsesorpthisAgenteInstance();
-        String funcionariohacerAsesorpCodJefe = request.getFuncionariohacerAsesorpCodJefe();
         TipoIdentificacion funcionariohacerAsesorpagrTipoIdentificacion = request.getFuncionariohacerAsesorpagrTipoIdentificacionInstance();
         Boolean funcionariohacerAsesorpatrmodificaDirector = request.getFuncionariohacerAsesorpatrmodificaDirector();
         Boolean funcionariohacerAsesorpatresDirector = request.getFuncionariohacerAsesorpatresDirector();
