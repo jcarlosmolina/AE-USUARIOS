@@ -912,7 +912,7 @@ public class SQLSelect {
                     currentAlias = nextAlias;
                 }
             } catch (Exception e) {
-                LoggerFactory.getLogger(SQLSelect.class).error(e.getMessage());
+               // LoggerFactory.getLogger(SQLSelect.class).error(e.getMessage());
             }
         }
         return nextAlias;

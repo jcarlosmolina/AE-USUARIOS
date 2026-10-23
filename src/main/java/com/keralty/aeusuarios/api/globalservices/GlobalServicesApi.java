@@ -30,11 +30,18 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.POST;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
+import com.keralty.aeusuarios.global.GlobalServiceConstants;
+import com.keralty.aeusuarios.service.GlobalServicesItSelf;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+
 @Path("/api/GlobalServicesApi")
 @RequestScoped
 public class GlobalServicesApi {
 
     GlobalServicesService service;
+    
+    @RestClient
+    GlobalServicesItSelf globalServicesItSelf;
 
     public GlobalServicesApi(GlobalServicesService service, JsonWebToken jwt) {
         this.service = service;
@@ -66,7 +73,26 @@ public class GlobalServicesApi {
     @Path(value = "/OGSINCASESORES")
     @RolesAllowed({"Admin","SuperAdmin","UsuarioSistemaExterno"})
     public OGSINCASESORESResponse oGSINCASESORES(OGSINCASESORESRequest request) {
-        return service.oGSINCASESORES(request);
+    	
+    	// Llama a un REST que es el mismo, pero sin esperar respuesta
+    	globalServicesItSelf.oGSINCASESORES_Async(request);
+    	
+    	OGSINCASESORESResponse response = new OGSINCASESORESResponse();
+    	response.setOGSINCASESORESoaMensaje(GlobalServiceConstants.G_OGSINCASESORES_MSG);
+		// Devolvemos Ok 
+    	return response ;
+    }
+    
+    @POST
+    @Path(value = "/OGSINCASESORES_Async")
+    @RolesAllowed({"Admin","SuperAdmin","UsuarioSistemaExterno"})
+    public OGSINCASESORESResponse OGSINCASESORES_Async(OGSINCASESORESRequest request) {
+    	
+    	org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("\nINICIO PROCESO SINCRONIZACION ASESORES");
+    	OGSINCASESORESResponse retorno = service.oGSINCASESORES(request);
+    	org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("\nFIN PROCESO SINCRONIZACION ASESORES");
+    	
+    	return retorno;    	
     }
 
     @POST

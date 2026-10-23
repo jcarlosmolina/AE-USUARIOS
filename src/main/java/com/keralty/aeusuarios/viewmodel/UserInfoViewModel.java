@@ -3,6 +3,7 @@ package com.keralty.aeusuarios.viewmodel;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.keralty.aeusuarios.persistence.GridPreferences;
 import com.keralty.aeusuarios.utils.DynamicPermissionsUtils;
@@ -18,14 +19,26 @@ public class UserInfoViewModel {
     @JsonProperty("roles")
     private String roles;
 
-    @JsonProperty("visibleHATNodes")
+    @JsonIgnore
     private List<String> visibleHATNodes;
 
-    @JsonProperty("visibleIUs")
+    @JsonIgnore
     private List<VisibleIUPermissions> visibleIUs;
 
-    @JsonProperty("gridPreferences")
+    @JsonIgnore
     private List<GridPreferences> gridPreferences;
+
+    @JsonProperty("token")
+    private String token;
+
+    @JsonProperty("oidJson")
+    private String oidJson;
+
+    @JsonProperty("errorCode")
+    private String errorCode = "";
+
+    @JsonProperty("userCache")
+    private String userCache = "";
 
     public UserInfoViewModel() {
         this.email = "";
@@ -40,9 +53,7 @@ public class UserInfoViewModel {
         this.email = userName;
         this.roles = userRoles;
         this.hasRegistered = true;
-        DynamicPermissionsUtils dynamicPermissionsUtils = new DynamicPermissionsUtils(userName, userRoles);
-        this.visibleHATNodes = dynamicPermissionsUtils.getVisibleHATNodesForUser();
-        this.visibleIUs = dynamicPermissionsUtils.getVisibleIUsForUser();
+
         this.gridPreferences = new ArrayList<>();
     }
 
@@ -92,6 +103,36 @@ public class UserInfoViewModel {
 
     public void setGridPreferences(List<GridPreferences> gridPreferences) {
         this.gridPreferences = gridPreferences;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getOidJson() {
+        return oidJson;
+    }
+
+    public void setOidJson(String oidJson) {
+        this.oidJson = oidJson;
+    }
+    public String getErrorCode() {
+        return errorCode;
+    }
+
+    public void setErrorCode(String errorCode) {
+        this.errorCode = errorCode;
+    }
+    public String getUserCache() {
+        return userCache;
+    }
+
+    public void setUserCache(String userCache) {
+        this.userCache = userCache;
     }
 
 }

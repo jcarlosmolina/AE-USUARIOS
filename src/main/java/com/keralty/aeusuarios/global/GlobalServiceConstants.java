@@ -900,6 +900,7 @@ public class GlobalServiceConstants {
     public static final String GS_TGSINC1ASESORAUX_SRVAGENTS = "";
 
     // Service (OGSINCASESORES)
+    public static final String G_OGSINCASESORES_MSG = "La sincronización de Asesores se está procesando, terminará en unos minutos";
     /** <code>OGSINCASESORES</code> service Name. */
     public static final String G_SERV_NAME_OGSINCASESORES = "OGSINCASESORES";
     /** <code>OGSINCASESORES</code> service Alias. */

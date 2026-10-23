@@ -24,7 +24,7 @@ spec:
       containers:
         - name: ae-usuarios
 # Replace the placeholder below with the name of your OpenShift namespace/project
-          image: 'image-registry.openshift-image-registry.svc:5000/${YourNamespaceOrProjectNameHere}/ae-usuarios:latest'
+          image: 'image-registry.openshift-image-registry.svc:5000/soporte-colsanitas-dev/ae-usuarios:latest'
           ports:
             - containerPort: 8081
               protocol: TCP
@@ -92,11 +92,73 @@ spec:
               configMapKeyRef:
                 name: ae-config
                 key: ae-generasolicitud-url
+# Configuracion general de integraciones con servicios de BH
+          - name: com.keralty.integraciones.maxintentosllamada
+            valueFrom:
+              configMapKeyRef:
+                name: ae-config
+                key: integraciones-maxintentosllamada
+          - name: com.keralty.integraciones.codaplicacion
+            valueFrom:
+              configMapKeyRef:
+                name: ae-config
+                key: integraciones-codaplicacion
+          - name: com.keralty.integraciones.funcionnegocio
+            valueFrom:
+              configMapKeyRef:
+                name: ae-config
+                key: integraciones-funcionnegocio
+# Configuracion servicios de BH
+          - name: quarkus.rest-client.integraciones_token.url
+            valueFrom:
+              configMapKeyRef:
+                name: ae-config
+                key: integraciones_token-url
+          - name: com.keralty.integraciones.token.hash
+            valueFrom:
+              secretKeyRef:
+                name: ae-secret
+                key: integraciones-token-hash
+          - name: com.keralty.integraciones.token.usr
+            valueFrom:
+              secretKeyRef:
+                name: ae-secret
+                key: integraciones-token-usr
+          - name: com.keralty.integraciones.token.pwd
+            valueFrom:
+              secretKeyRef:
+                name: ae-secret
+                key: integraciones-token-pwd
+          - name: quarkus.rest-client.integraciones_parametricas.url
+            valueFrom:
+              configMapKeyRef:
+                name: ae-config
+                key: integraciones_parametricas-url
+          - name: com.keralty.integraciones.parametricas.user
+            valueFrom:
+              configMapKeyRef:
+                name: ae-config
+                key: integraciones-parametricas-user
+          - name: com.keralty.integraciones.parametricas.asesor.nom_table
+            valueFrom:
+              configMapKeyRef:
+                name: ae-config
+                key: integraciones-parametricas-asesor-nom_table
+          - name: com.keralty.integraciones.parametricas.tipoagente.nom_table
+            valueFrom:
+              configMapKeyRef:
+                name: ae-config
+                key: integraciones-parametricas-tipoagente-nom_table
+          - name: com.keralty.integraciones.parametricas.agentexproducto.nom_table
+            valueFrom:
+              configMapKeyRef:
+                name: ae-config
+                key: integraciones-parametricas-agentexproducto-nom_table
 # Set the values below according to your preferences to assign resources to this microservice
           resources:
             limits:
-              cpu: '1'
-              memory: 500Mi
+              cpu: 300m
+              memory: 350Mi
             requests:
               cpu: 10m
-              memory: 250Mi
+              memory: 200Mi

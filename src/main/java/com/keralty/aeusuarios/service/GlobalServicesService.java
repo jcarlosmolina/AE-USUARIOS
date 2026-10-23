@@ -28,6 +28,18 @@ import jakarta.transaction.Transactional;
 import java.sql.Timestamp;
 import org.slf4j.LoggerFactory;
 
+import com.keralty.aeusuarios.viewmodel.planes.filter.FPlanesPorCodLegal;
+import com.keralty.integraciones.parametricas.DatoParametrica;
+import com.keralty.integraciones.parametricas.ParametricasUtils;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.InputStreamReader;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
+
 @Transactional
 @ApplicationScoped
 public class GlobalServicesService extends AbstractService {
@@ -53,6 +65,11 @@ public class GlobalServicesService extends AbstractService {
     RolService rolSrv;
 
     GlobalServicesJpaRepository globalServicesRepository;
+    
+    @RestClient
+    GlobalServiceDeAEConfiguraciones globalServiceDeAEConfiguraciones;
+
+    ParametricasUtils parametricasUtils;
 
     @Inject
     public GlobalServicesService(
@@ -66,7 +83,9 @@ public class GlobalServicesService extends AbstractService {
             RolService rolSrv,
             GlobalServicesJpaRepository globalServicesRepository,
             UserFunctions userFunctionsSrv,
-            GlobalServicesService globalServicesSrv) {
+            GlobalServicesService globalServicesSrv,
+            ParametricasUtils parametricasUtils) {
+        this.parametricasUtils = parametricasUtils;
         this.productosSrv = productosSrv;
         this.frecuenciaActSrv = frecuenciaActSrv;
         this.agentexProductoSrv = agentexProductoSrv;
@@ -454,11 +473,194 @@ public class GlobalServicesService extends AbstractService {
     public com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCASESORESResponse oGSINCASESORES(
             com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCASESORESRequest request) {
         com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCASESORESResponse response = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCASESORESResponse();
+
         try {
-            response = globalServicesSrv.oGSINCASESORESTxn(request);
+        	UsuarioSistemaExterno usuExterno = getAgentUsuarioSistemaExterno();
+        	if (usuExterno == null || usuExterno.isNull()) {
+		        com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCSUCURSALESRequest step1Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCSUCURSALESRequest();
+		        globalServiceDeAEConfiguraciones.oGSINCSUCURSALES(step1Request);        
+		
+		        com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINCTIPOSIDENTIFICACIONRequest step2Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINCTIPOSIDENTIFICACIONRequest();
+		        globalServiceDeAEConfiguraciones.tGSINCTIPOSIDENTIFICACION(step2Request);
+        	}
+	
+	        List<DatoParametrica> asesores = parametricasUtils.getAsesores();
+	        
+	        org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("\nInicio Asesores");
+	        int contador = 0;
+	    	int numTotalAsesores = 0;
+	    	int numFallosAsesores = 0;
+	    	String codLegalSucursal = null;
+	    	String codigoDirector = null;
+	    	String tipoIdAgente = null;
+	    	String numIdentificacion = null;
+	    	String primerNombre = null;
+	    	String segundoNombre = null;
+	    	String primerApe = null;
+	    	String segundoApe = null;
+	    	String textoParaError = "";
+	    	String canalComercial = null;
+	    	String cargo = null;
+	    	String cargoDesc = null;
+	    	String estado = null;
+	        
+	        String textoLogParametrica = "Exito";
+	        if (asesores == null) {
+	            textoLogParametrica = "    Asesores no recuperados";
+	            org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info(textoLogParametrica);        
+	        } else {
+	        	numTotalAsesores = asesores.size();
+	
+	        	List<DatoParametrica> tipoAgente = parametricasUtils.getTipoAgenteCORE();
+	        	
+	        	// Map para los tipos de identificaciÃƒÂ³n
+	        	java.util.Map<String, TipoIdentificacion> tiposIdentificacion = new java.util.HashMap<String, TipoIdentificacion>();
+	        	TipoIdentificacion tipoIdentificacion = null;
+		        for (DatoParametrica asesor : asesores) {
+		        	
+		        	try {
+		        		
+	                    // SUCURSAL
+	                    codLegalSucursal = asesor.getValorDeAdicional("codLegalSucursal");
+	                    // Si no hemos recibido o no tenemos la sucursal, se ponemos la primera 
+	                    if (codLegalSucursal == null || codLegalSucursal.isEmpty()){
+	                  	  codLegalSucursal = "0";
+	                    }
+	                    
+	                    // CODIGO DIRECTOR
+	                     codigoDirector = asesor.getValorDeAdicional( "codDirector");
+
+	                     // Formamos el texto para el posible error
+		                 textoParaError = "Error sincronizando Asesor con Codigo: " + asesor.getCode();
+	                    
+	                    
+	                    // Tipo y numero de identificacion
+	                    tipoIdAgente  = asesor.getValorDeAdicional( "tipoIdentificacionAgente");
+                    	tipoIdentificacion = null;
+	                    
+	                    // Guardamos en el Map el tipo
+	                    if (tipoIdAgente != null) {
+		                    if (tiposIdentificacion.containsKey(tipoIdAgente)) {
+		                    	tipoIdentificacion = tiposIdentificacion.get(tipoIdAgente);
+		                    } else {
+		                    	tipoIdentificacion = userFunctionsSrv.fugetTipoIdentificacionFun(tipoIdAgente);
+		                    	tiposIdentificacion.put(tipoIdAgente, tipoIdentificacion);
+		                    }
+	                    }
+
+	                    numIdentificacion = asesor.getValorDeAdicional( "numIdentificacionAgente");
+	                    
+	                    String[] nombres = ParametricasUtils.descomponerNombreCompleto(asesor.getName().trim(), true);
+	                    if (nombres[0] != null && nombres[0].length() > 50){
+	                  	  primerNombre = nombres[0].substring(0, 49);
+	                    } else{
+	                  	  primerNombre = nombres[0];
+	                    }
+	                    if (nombres[1] != null && nombres[1].length() > 50){
+	                  	  segundoNombre = nombres[1].substring(0, 49);
+	                    } else{
+	                  	  segundoNombre = nombres[1];
+	                    }
+	                    if (nombres[2] != null && nombres[2].length() > 50){
+	                  	  primerApe = nombres[2].substring(0, 49);
+	                    } else{
+	                  	  primerApe = nombres[2];
+	                    }
+	                    if (nombres[3] != null && nombres[3].length() > 50){
+	                  	  segundoApe = nombres[3].substring(0, 49);
+	                    } else{
+	                  	  segundoApe = nombres[3];
+	                    }
+	                    
+	                    // GdC-36. Req 7
+	                    canalComercial  = asesor.getValorDeAdicional( "codCanalComercial");
+	                    if (canalComercial != null) {
+	                  	  if (canalComercial.equalsIgnoreCase("1")) {
+	                      	  canalComercial = "FUERZA DE VENTA INTERNA";
+	                  	  }
+	                  	  if (canalComercial.equalsIgnoreCase("2")) {
+	                  		  canalComercial = "FUERZA DE VENTA EXTERNA";
+	                  	  }
+	                    }
+	                    cargo  = asesor.getValorDeAdicional( "codTipoAgente");
+	                    cargoDesc = ParametricasUtils.getDescripcionPorCodigo(tipoAgente, cargo);
+	                    if (cargoDesc == null) {
+	                  	  cargoDesc = cargo;
+	                    }
+	                    estado = asesor.getValorDeAdicional( "estado");
+	
+	                    if (cargoDesc != null && cargoDesc.length() > 50) {
+	                  	  cargoDesc = cargoDesc.substring(0, 49);
+	                    }
+	                    if (cargoDesc != null && cargoDesc.length() > 50) {
+	                  	  cargoDesc = cargoDesc.substring(0, 49);
+	                    }
+	                    if (estado != null && estado.length() > 50) {
+	                  	  estado = estado.substring(0, 49);
+	                    }	        		
+		                com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1ASESORRequest step3Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1ASESORRequest();
+		                step3Request.setTGSINC1ASESORptpatrUsuario(asesor.getCode());
+		                step3Request.setTGSINC1ASESORptpatrPrimerNombre(primerNombre);
+		                step3Request.setTGSINC1ASESORptpatrSegundoNombre(segundoNombre);
+		                step3Request.setTGSINC1ASESORptpatrPrimerApellido(primerApe);
+		                step3Request.setTGSINC1ASESORptpatrSegundoApellido(segundoApe);
+		                step3Request.setTGSINC1ASESORptpatrEmail(null);
+		                step3Request.setTGSINC1ASESORptpatrCodigoSucursal(Long.valueOf(codLegalSucursal));
+		                step3Request.setTGSINC1ASESORpCodDirector(codigoDirector);
+		                step3Request.setTGSINC1ASESORpTipoIdentificacionInstance(tipoIdentificacion);
+		                step3Request.setTGSINC1ASESORpNumIdentificacion(numIdentificacion);
+		                step3Request.setTGSINC1ASESORptpCanal(canalComercial);
+		                step3Request.setTGSINC1ASESORptpCargo(cargoDesc);
+		                step3Request.setTGSINC1ASESORptpEstado(estado);
+		                ServiceResponse resp = globalServicesSrv.tGSINC1ASESOR(step3Request);
+		                if ( !resp.isOk()) {
+			        		org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("    " + textoParaError);
+			        		org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("    " + resp.getResultCode() + " - " + resp.getResultDescription());
+		                	numFallosAsesores++;
+		                }
+		        		
+		        		
+		        	} catch (SystemException e) {
+		        		org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("    " + textoParaError);
+		        		org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("    " + e.getMessage());
+	        			numFallosAsesores++;
+	        		}
+	        		catch (ModelException e) {
+		        		org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("    " + textoParaError);
+		        		org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("    " + e.getMessage());
+	        			numFallosAsesores++;
+	        		}
+	        		catch (Exception e) {
+		        		org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("    " + textoParaError);
+		        		org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("    " + e.getMessage());
+	        			numFallosAsesores++;
+	        		}
+		        	
+		        	contador++;
+		        }
+		        textoLogParametrica = "Exito";
+		        if (numFallosAsesores > 0){
+		        	textoLogParametrica = String.valueOf(numFallosAsesores) + " fallos de " + String.valueOf(numTotalAsesores);
+		        }
+		        
+	        }
+	        
+	        org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("\nFin Asesores. Total Asesores: " + String.valueOf(numTotalAsesores) + "   Numero de fallos: " + String.valueOf(numFallosAsesores));        
+	
+	        
+    		com.keralty.aeusuarios.viewmodel.globalservices.siu.TGFIJARDATOSSINCRequest requestFijar = new com.keralty.aeusuarios.viewmodel.globalservices.siu.TGFIJARDATOSSINCRequest();
+    		requestFijar.setTGFIJARDATOSSINCptNumParametrica(4L);
+    		requestFijar.setTGFIJARDATOSSINCptResultado(textoLogParametrica);
+    		globalServicesSrv.tGFIJARDATOSSINC(requestFijar );
+	
+	        com.keralty.aeusuarios.viewmodel.globalservices.siu.TGPOSPROCESARASESORESRequest step5Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.TGPOSPROCESARASESORESRequest();
+	        globalServicesSrv.tGPOSPROCESARASESORES(step5Request);
+	
+	        com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCAGENTESXPRODRequest step6Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCAGENTESXPRODRequest();
+	        globalServicesSrv.oGSINCAGENTESXPROD(step6Request);
         } catch (Exception e) {
-            response.setException(e);
-        }
+        	response.setException(e);
+		}
         return response;
     }
 
@@ -738,11 +940,93 @@ public class GlobalServicesService extends AbstractService {
     public ServiceResponse oGSINCAGENTESXPROD(
             com.keralty.aeusuarios.viewmodel.globalservices.siu.OGSINCAGENTESXPRODRequest request) {
         ServiceResponse response = new ServiceResponse();
+
+        int numTotal = 0;
+        int numFallos = 0;
         try {
-            response = globalServicesSrv.oGSINCAGENTESXPRODTxn(request);
-        } catch (Exception e) {
-            response.setException(e);
+	        SimpleDateFormat datetimeFormat = new java.text.SimpleDateFormat("dd/MM/yyyy hh:mm:ss a", Locale.US);
+	        
+	        org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("\nInicio Agentes x Producto");
+	        List<DatoParametrica> agentesxProducto = parametricasUtils.getAgentesXProductoCORE();
+	        int contador = 0;
+	        if (agentesxProducto != null){
+	        	numTotal = agentesxProducto.size();
+	        	Long codigo;
+	        	String codLegalProducto;
+	        	Timestamp fechaIni;
+	        	Timestamp fechaFin;
+	        	String asesor;
+	        	String fecha = "";
+	            
+	        	for(DatoParametrica dato : agentesxProducto){
+	            	codigo = null;
+	            	codLegalProducto = null;
+	            	fechaIni = null;
+	            	fechaFin = null;
+	            	asesor = null;
+	            	if (dato.getCode() != null){
+	            		codigo = Long.parseLong(dato.getCode());
+	            	}
+	            	try {
+	            		codLegalProducto = dato.getValorDeAdicional("Producto");
+	            		
+	            		fecha = dato.getValorDeAdicional("fechaInicio");
+	            		if (fecha != null) {
+		            		fecha = fecha.replace("a. m.", "AM");
+		            		fecha = fecha.replace("p. m.", "PM");
+		            		fechaIni = new java.sql.Timestamp(datetimeFormat.parse(fecha).getTime());
+	            		}
+	            		
+	            		fecha = dato.getValorDeAdicional("fechaFin");
+	            		if (fecha != null) {
+		            		fecha = fecha.replace("a. m.", "AM");
+		            		fecha = fecha.replace("p. m.", "PM");
+		            		fechaFin = new java.sql.Timestamp(datetimeFormat.parse(fecha).getTime());
+	            		}
+	            		
+	            		asesor = dato.getValorDeAdicional("codigoAsesor");
+	            	} catch (ParseException e) {
+	                    org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("\n    Error parsing date. Codigo = " + codigo.toString() + "\n");
+	                    org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info(e.getMessage());
+	            		numFallos++;
+	            		codigo = null;
+					}
+	                // Si tenemos los datos necesarios llamamos a la global de sincronizar un asesor producto
+	                if (codigo != null && codLegalProducto != null && asesor != null){
+	            		
+	                    com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1AGENTEXPRODRequest step1Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.TGSINC1AGENTEXPRODRequest();
+	                    step1Request.setTGSINC1AGENTEXPRODpProducto(codLegalProducto);
+	                    step1Request.setTGSINC1AGENTEXPRODptpatrFechaInicio(fechaIni);
+	                    step1Request.setTGSINC1AGENTEXPRODptpatrFechaFin(fechaFin);
+	                    step1Request.setTGSINC1AGENTEXPRODptpAsesor(asesor);
+	                    step1Request.setTGSINC1AGENTEXPRODpCodigo(Long.valueOf(codigo));
+	                    ServiceResponse resp =  globalServicesSrv.tGSINC1AGENTEXPROD(step1Request);
+	            		if (!resp.isOk()) {
+	                        org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("\n    Error. Codigo = " + codigo.toString());
+	                        org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("\n    " + resp.getResultCode() + " - " + resp.getResultDescription());
+	                		numFallos++;
+	            		}
+	            	}
+	        		contador++;
+	
+	            }
+	        }            
+	
+	        String textoLogParametrica = "Exito";
+	        if (numFallos > 0){
+	        	textoLogParametrica = String.valueOf(numFallos) + " fallos de " + String.valueOf(numTotal);
+	        }        
+	        
+
+    		com.keralty.aeusuarios.viewmodel.globalservices.siu.TGFIJARDATOSSINCRequest requestFijar = new com.keralty.aeusuarios.viewmodel.globalservices.siu.TGFIJARDATOSSINCRequest();
+    		requestFijar.setTGFIJARDATOSSINCptNumParametrica(28L);
+    		requestFijar.setTGFIJARDATOSSINCptResultado(textoLogParametrica);
+    		globalServicesSrv.tGFIJARDATOSSINC(requestFijar );
+	        
+        } catch(Exception e) {
+        	response.setException(e);
         }
+        org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).info("\nFin Agentes x Producto. Total : " + String.valueOf(numTotal) + "   Numero de fallos: " + String.valueOf(numFallos));        
         return response;
     }
 
@@ -1580,7 +1864,78 @@ public class GlobalServicesService extends AbstractService {
             com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESRequest request) {
         com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESResponse response = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESResponse();
         try {
-            response = globalServicesSrv.oGCARGAVISASESORESTxn(request);
+    		byte[] oGCARGAVISASESORESptFichero = request.getOGCARGAVISASESORESptFichero();
+
+    		request.checkArguments();
+
+    		Long oaProcesados = 0L;
+    		Long oaErrores = 0L;
+    		String oaResultado = "";
+
+    		try {
+
+    			ByteArrayInputStream inputStream = new ByteArrayInputStream(oGCARGAVISASESORESptFichero);
+    			BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)); 
+
+    			String numUsuario = "";
+    			String linea = "";
+    			String visiInclusionNuevaAfiliacion = "";
+    			String visiNovedades = "";
+    			String visidatosGestorDocumental = "";
+    			Asesor asesor = null;
+    			while((linea = reader.readLine()) != null){
+
+    				if (linea.isEmpty()) {
+    					continue;
+    				}
+
+    				String[] arrayDatos = linea.split(",");
+
+    				oaProcesados++;
+
+    				if (arrayDatos.length != 4) {
+    					oaErrores++;
+    					oaResultado += "Formato de linea no valido: " + linea + "\n";
+    				} else {
+    					numUsuario = arrayDatos[0].trim();
+    					visiInclusionNuevaAfiliacion = arrayDatos[1].trim();
+    					visiNovedades = arrayDatos[2].trim();
+    					visidatosGestorDocumental = arrayDatos[3].trim();
+    					asesor = userFunctionsSrv.fugetAsesorFun(numUsuario);
+    					if (asesor == null || asesor.isNull()) {
+    						oaErrores++;
+    						oaResultado += "Asesor no encontrado: " + linea + "\n";
+    					} else {
+    						try {
+    							com.keralty.aeusuarios.viewmodel.asesor.siu.TMODVISIBILIDADRequest stepVisi = new com.keralty.aeusuarios.viewmodel.asesor.siu.TMODVISIBILIDADRequest();
+    							stepVisi.setAsesorTMODVISIBILIDADpthisAsesorInstance(asesor);
+    							stepVisi.setAsesorTMODVISIBILIDADptpVerDatosPersona("1".equalsIgnoreCase(visiInclusionNuevaAfiliacion));
+    							stepVisi.setAsesorTMODVISIBILIDADptpVerDocsPersona("1".equalsIgnoreCase(visiNovedades));
+    							stepVisi.setAsesorTMODVISIBILIDADptpVerContratoNovedad("1".equalsIgnoreCase(visidatosGestorDocumental));
+    							ServiceResponse resp = asesorSrv.tMODVISIBILIDAD(stepVisi);
+    							if (!resp.isOk()) {
+        							oaErrores++;
+        							oaResultado += "Error procesando Asesor. Linea: " + linea + "\n";
+        							org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).error("Carga visibilidad de asesores. Error procesando Asesor. Linea: " + linea + "\n" + resp.getResultDescription());
+    							}
+    						} catch (Exception e) {
+    							oaErrores++;
+    							oaResultado += "Error procesando Asesor. Linea: " + linea + "\n";
+    							org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).error("Carga visibilidad de asesores. Error procesando Asesor. Linea: " + linea + "\n" + e.getMessage());
+    						}
+    					}
+    				}
+
+    			}
+
+    		} catch (Exception e) {
+    			org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).error("Carga visibilidad de asesores.\n" + e.getMessage());
+    			oaResultado = SystemException.GENERIC_EXCEPTION_MESSAGE;
+    		}        
+
+    		response.setOGCARGAVISASESORESoaProcesados(oaProcesados);
+    		response.setOGCARGAVISASESORESoaErrores(oaErrores);
+    		response.setOGCARGAVISASESORESoaResultado(oaResultado);
         } catch (Exception e) {
             response.setException(e);
         }
@@ -1607,28 +1962,7 @@ public class GlobalServicesService extends AbstractService {
     public com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESResponse oGCARGAVISASESORESImplementation(
             com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESRequest request) throws ModelException, SystemException {
         com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESResponse response = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESResponse();
-        byte[] oGCARGAVISASESORESptFichero = request.getOGCARGAVISASESORESptFichero();
 
-        request.checkArguments();
-
-        try {
-            /* Action 1: IF (1 > 2) */
-            boolean ifCondition1 = Long.valueOf(1) > Long.valueOf(2);
-            if (ifCondition1) {
-                    com.keralty.aeusuarios.viewmodel.asesor.siu.TMODVISIBILIDADRequest step10Request = new com.keralty.aeusuarios.viewmodel.asesor.siu.TMODVISIBILIDADRequest();
-                    step10Request.setAsesorTMODVISIBILIDADpthisAsesorInstance(((Asesor) getAgentInstance(AsesorConstants.CLASS_NAME)));
-                    step10Request.setAsesorTMODVISIBILIDADptpVerDatosPersona(Boolean.TRUE);
-                    step10Request.setAsesorTMODVISIBILIDADptpVerDocsPersona(Boolean.TRUE);
-                    step10Request.setAsesorTMODVISIBILIDADptpVerContratoNovedad(Boolean.TRUE);
-                    asesorSrv.tMODVISIBILIDADTxn(step10Request);
-                    com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESRequest step11Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESRequest();
-                    step11Request.setOGCARGAVISASESORESptFichero(oGCARGAVISASESORESptFichero);
-                    com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESResponse step11Response = globalServicesSrv.oGCARGAVISASESORESTxn(step11Request);
-                    response.setOGCARGAVISASESORESoaProcesados(step11Response.getOGCARGAVISASESORESoaProcesados());
-                    response.setOGCARGAVISASESORESoaErrores(step11Response.getOGCARGAVISASESORESoaErrores());
-                    response.setOGCARGAVISASESORESoaResultado(step11Response.getOGCARGAVISASESORESoaResultado());
-            }
-        } catch (Exception e) { }
         return response;
     }
 
@@ -1642,7 +1976,83 @@ public class GlobalServicesService extends AbstractService {
             com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORRequest request) {
         com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORResponse response = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORResponse();
         try {
-            response = globalServicesSrv.oGCARGAPLANASESORTxn(request);
+            byte[] oGCARGAPLANASESORptFichero = request.getOGCARGAPLANASESORptFichero();
+
+            request.checkArguments();
+
+        	Long oaProcesados = 0L;
+        	Long oaErrores = 0L;
+        	String oaResultado = "";
+
+            try {
+
+        		ByteArrayInputStream inputStream = new ByteArrayInputStream(oGCARGAPLANASESORptFichero);
+        		BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream)); 
+
+        		String numUsuario = "";
+        		String linea = "";
+        		String codLegalProducto = "";
+        		String codLegalPlan = "";
+        		String accion = "";
+        		Asesor asesor = null;
+        		while((linea = reader.readLine()) != null){
+
+        			if (linea.isEmpty()) {
+        				continue;
+        			}
+
+        			String[] arrayDatos = linea.split(",");
+
+        			oaProcesados++;
+
+        			if (arrayDatos.length != 4) {
+        				oaErrores++;
+        				oaResultado += "Formato de linea no valido: " + linea + "\n";
+        				continue;
+        			}
+        			numUsuario = arrayDatos[0];
+        			codLegalProducto = arrayDatos[1];
+        			codLegalPlan = arrayDatos[2];
+        			accion = arrayDatos[3];
+        			if (!accion.equalsIgnoreCase("0") && !accion.equalsIgnoreCase("1")) {
+        				oaErrores++;
+        				oaResultado += "Accion no valida: " + linea + "\n";
+        				continue;
+        			}
+        			asesor = userFunctionsSrv.fugetAsesorFun(numUsuario);
+        			if (asesor == null || asesor.isNull()) {
+        				oaErrores++;
+        				oaResultado += "Asesor no encontrado: " + linea + "\n";
+        				continue;
+        			}
+        			try {
+        	            com.keralty.aeusuarios.viewmodel.asesor.siu.TCARGARDOMINIOPLANRequest requestCargarDominio = new com.keralty.aeusuarios.viewmodel.asesor.siu.TCARGARDOMINIOPLANRequest();
+        	            requestCargarDominio.setAsesorTCARGARDOMINIOPLANpthisAsesorInstance(asesor);
+        	            requestCargarDominio.setAsesorTCARGARDOMINIOPLANptCodLegalProducto(codLegalProducto);
+        	            requestCargarDominio.setAsesorTCARGARDOMINIOPLANptCodLegalPlan(codLegalPlan);
+        	            requestCargarDominio.setAsesorTCARGARDOMINIOPLANptAccion(accion);
+        	            ServiceResponse resp = asesorSrv.tCARGARDOMINIOPLAN(requestCargarDominio);
+						if (!resp.isOk()) {
+							oaErrores++;
+							oaResultado += "Error procesando Asesor. Linea: " + linea + "\n";
+							org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).error("Carga plana de asesores. Error procesando Asesor. Linea: " + linea + "\n" + resp.getResultDescription());
+						}
+
+        			} catch (Exception e) {
+        				oaErrores++;
+        				oaResultado += "Error procesando Asesor. Linea: " + linea + "\n";
+        	    		org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).error("Carga plana de asesores. Error procesando Asesor. Linea: " + linea + "\n" + e.getMessage());
+        			}
+
+        		}
+
+        	} catch (Exception e) {
+        		org.slf4j.LoggerFactory.getLogger(this.getClass().getName()).error("Carga plana de asesores:\n" + e.getMessage());
+        	}
+
+            response.setOGCARGAPLANASESORoaProcesados(oaProcesados);
+            response.setOGCARGAPLANASESORoaErrores(oaErrores);
+            response.setOGCARGAPLANASESORoaResultado(oaResultado);            
         } catch (Exception e) {
             response.setException(e);
         }
@@ -1669,28 +2079,7 @@ public class GlobalServicesService extends AbstractService {
     public com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORResponse oGCARGAPLANASESORImplementation(
             com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORRequest request) throws ModelException, SystemException {
         com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORResponse response = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORResponse();
-        byte[] oGCARGAPLANASESORptFichero = request.getOGCARGAPLANASESORptFichero();
 
-        request.checkArguments();
-
-        try {
-            /* Action 1: IF (1 > 2) */
-            boolean ifCondition1 = Long.valueOf(1) > Long.valueOf(2);
-            if (ifCondition1) {
-                    com.keralty.aeusuarios.viewmodel.asesor.siu.TCARGARDOMINIOPLANRequest step10Request = new com.keralty.aeusuarios.viewmodel.asesor.siu.TCARGARDOMINIOPLANRequest();
-                    step10Request.setAsesorTCARGARDOMINIOPLANpthisAsesorInstance(((Asesor) getAgentInstance(AsesorConstants.CLASS_NAME)));
-                    step10Request.setAsesorTCARGARDOMINIOPLANptCodLegalProducto("");
-                    step10Request.setAsesorTCARGARDOMINIOPLANptCodLegalPlan("");
-                    step10Request.setAsesorTCARGARDOMINIOPLANptAccion("");
-                    asesorSrv.tCARGARDOMINIOPLANTxn(step10Request);
-                    com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORRequest step11Request = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORRequest();
-                    step11Request.setOGCARGAPLANASESORptFichero(oGCARGAPLANASESORptFichero);
-                    com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORResponse step11Response = globalServicesSrv.oGCARGAPLANASESORTxn(step11Request);
-                    response.setOGCARGAPLANASESORoaProcesados(step11Response.getOGCARGAPLANASESORoaProcesados());
-                    response.setOGCARGAPLANASESORoaErrores(step11Response.getOGCARGAPLANASESORoaErrores());
-                    response.setOGCARGAPLANASESORoaResultado(step11Response.getOGCARGAPLANASESORoaResultado());
-            }
-        } catch (Exception e) { }
         return response;
     }
 
