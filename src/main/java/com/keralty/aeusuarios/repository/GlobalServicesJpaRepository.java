@@ -53,37 +53,37 @@ public interface GlobalServicesJpaRepository {
 
     Boolean assocOperator101(Asesor tGSINC1AGENTEXPRODAUXptpagrAsesor, Long tGSINC1AGENTEXPRODAUXptpatrCodigo) throws SystemException;
 
-    Collection<Asesor> assocOperator116(String tGPOSPROCESS1ASESORpUsuario) throws SystemException;
+    Collection<Asesor> assocOperator110(String tGPOSPROCESS1ASESORpUsuario) throws SystemException;
 
-    Collection<Asesor> assocOperator117() throws SystemException;
+    Collection<Asesor> assocOperator111() throws SystemException;
 
-    Boolean assocOperator118() throws SystemException;
+    Boolean assocOperator112() throws SystemException;
 
-    Collection<Asesor> assocOperator119() throws SystemException;
+    Collection<Asesor> assocOperator113() throws SystemException;
 
-    Boolean assocOperator120() throws SystemException;
+    Boolean assocOperator114() throws SystemException;
 
-    Boolean assocOperator121(String tCREARAGENTEptpatrUsuarioLDAP) throws SystemException;
+    Boolean assocOperator115(String tCREARAGENTEptpatrUsuarioLDAP) throws SystemException;
 
-    Long assocOperator122(String tMODIFICARAGENTEptpatrUsuarioLDAP, Funcionario tMODIFICARAGENTEptpthisAgente) throws SystemException;
+    Long assocOperator116(String tMODIFICARAGENTEptpatrUsuarioLDAP, Funcionario tMODIFICARAGENTEptpthisAgente) throws SystemException;
 
-    Collection<Funcionario> assocOperator129(String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException;
+    Collection<Funcionario> assocOperator123(String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException;
 
-    Long assocOperator130(String tGNEWASESORAGENCIAptpatrUsuarioLDAP) throws SystemException;
+    Long assocOperator124(String tGNEWASESORAGENCIAptpatrUsuarioLDAP) throws SystemException;
 
-    Long assocOperator131(String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException;
+    Long assocOperator125(String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException;
 
-    Collection<Funcionario> assocOperator132(String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException;
+    Collection<Funcionario> assocOperator126(String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException;
 
-    Long assocOperator133(String tGMODASESORAGENCIAptptUsuarioLDAP, Asesor tGMODASESORAGENCIAptpthisAsesor) throws SystemException;
+    Long assocOperator127(String tGMODASESORAGENCIAptptUsuarioLDAP, Asesor tGMODASESORAGENCIAptpthisAsesor) throws SystemException;
 
-    Long assocOperator134(String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException;
+    Long assocOperator128(String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException;
 
-    Collection<FrecuenciaAct> assocOperator159(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException;
+    Collection<FrecuenciaAct> assocOperator153(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException;
 
-    Collection<FrecuenciaAct> assocOperator160(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException;
+    Collection<FrecuenciaAct> assocOperator154(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException;
 
-    Collection<FrecuenciaAct> assocOperator161(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException;
+    Collection<FrecuenciaAct> assocOperator155(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException;
 
     void refreshEntity(Object object);
 }

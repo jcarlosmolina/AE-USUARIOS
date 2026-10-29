@@ -851,7 +851,7 @@ RADIO=1;
             value = titulardrvIdentificacionDerivations();
         } catch (Exception e) {
             value = "";
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Titular, Attribute: titulardrvIdentificacion");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Titular, Attribute: titulardrvIdentificacion");
         }
         return (value == null ? null : value.trim());
     }
@@ -902,7 +902,7 @@ RADIO=1;
             value = titulardrvNombreCompletoDerivations();
         } catch (Exception e) {
             value = "";
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Titular, Attribute: titulardrvNombreCompleto");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Titular, Attribute: titulardrvNombreCompleto");
         }
         return (value == null ? null : value.trim());
     }
@@ -1055,7 +1055,7 @@ RADIO=1;
             value = titulardrvBeneficiosActivoDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Titular, Attribute: titulardrvBeneficiosActivo");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Titular, Attribute: titulardrvBeneficiosActivo");
         }
         return value;
     }

@@ -526,7 +526,7 @@ RADIO=1;
             value = novedaddrvTieneCausalesDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Novedad, Attribute: novedaddrvTieneCausales");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Novedad, Attribute: novedaddrvTieneCausales");
         }
         return value;
     }
@@ -545,7 +545,7 @@ RADIO=1;
             value = novedaddrvTieneCausasExcepcionDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Novedad, Attribute: novedaddrvTieneCausasExcepcion");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Novedad, Attribute: novedaddrvTieneCausasExcepcion");
         }
         return value;
     }
@@ -628,7 +628,7 @@ RADIO=1;
             value = novedadDrvTextoMostrarDerivations();
         } catch (Exception e) {
             value = "";
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Novedad, Attribute: novedadDrvTextoMostrar");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Novedad, Attribute: novedadDrvTextoMostrar");
         }
         return (value == null ? null : value.trim());
     }

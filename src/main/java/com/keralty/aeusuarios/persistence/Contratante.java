@@ -959,7 +959,7 @@ RADIO=1;
             value = contratantedrvIdentificacionDerivations();
         } catch (Exception e) {
             value = "";
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Contratante, Attribute: contratantedrvIdentificacion");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Contratante, Attribute: contratantedrvIdentificacion");
         }
         return (value == null ? null : value.trim());
     }
@@ -978,7 +978,7 @@ RADIO=1;
             value = contratantedrvNombreCompletoDerivations();
         } catch (Exception e) {
             value = "";
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Contratante, Attribute: contratantedrvNombreCompleto");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Contratante, Attribute: contratantedrvNombreCompleto");
         }
         return (value == null ? null : value.trim());
     }
@@ -1168,7 +1168,7 @@ ALM MP-14. GdC-14:Req. 26: Configurar registro rechazado afiliación. Configurar
             value = contratantedrvBeneficiosActivoDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: Contratante, Attribute: contratantedrvBeneficiosActivo");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: Contratante, Attribute: contratantedrvBeneficiosActivo");
         }
         return value;
     }

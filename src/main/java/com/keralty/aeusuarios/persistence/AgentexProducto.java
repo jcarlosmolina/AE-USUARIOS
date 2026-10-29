@@ -363,7 +363,7 @@ public class AgentexProducto extends AbstractAppEntity {
             value = agentexProductodrvVigenteDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: AgentexProducto, Attribute: agentexProductodrvVigente");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: AgentexProducto, Attribute: agentexProductodrvVigente");
         }
         return value;
     }

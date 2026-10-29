@@ -99,14 +99,6 @@ public class GlobalServicesService extends AbstractService {
         this.globalServicesSrv = globalServicesSrv;
     }
 
-    private String sanitizar(String valor) {
-        if (valor == null) {
-            return null;
-        }
-        // \R = any line break (\n, \r, \r\n, \u2028, ...). CodeQL recognizes this pattern.
-        return valor.replaceAll("\\R", "_");
-    }
-    
     /*
      * Implements global service TGSINC1PRODUCTO
      * @param request Service request viewmodel
@@ -1239,7 +1231,7 @@ public class GlobalServicesService extends AbstractService {
 
         request.checkArguments();
 
-        for(Asesor step1Entity : globalServicesRepository.assocOperator116(tGPOSPROCESS1ASESORpUsuario)) {
+        for(Asesor step1Entity : globalServicesRepository.assocOperator110(tGPOSPROCESS1ASESORpUsuario)) {
             com.keralty.aeusuarios.viewmodel.asesor.siu.TPOSPROCESOSINCRequest step1Request = new com.keralty.aeusuarios.viewmodel.asesor.siu.TPOSPROCESOSINCRequest();
             step1Request.setAsesorTPOSPROCESOSINCpthisAsesorInstance(step1Entity);
             step1Request.setAsesorTPOSPROCESOSINCpEsDirector(tGPOSPROCESS1ASESORpEsDirector);
@@ -1291,14 +1283,14 @@ public class GlobalServicesService extends AbstractService {
         }
 
 
-        for(Asesor step1Entity : globalServicesRepository.assocOperator117()) {
+        for(Asesor step1Entity : globalServicesRepository.assocOperator111()) {
             com.keralty.aeusuarios.viewmodel.asesor.siu.TPOSPROCESOSINCRequest step1Request = new com.keralty.aeusuarios.viewmodel.asesor.siu.TPOSPROCESOSINCRequest();
             step1Request.setAsesorTPOSPROCESOSINCpthisAsesorInstance(step1Entity);
             step1Request.setAsesorTPOSPROCESOSINCpEsDirector(Boolean.TRUE);
             asesorSrv.tPOSPROCESOSINCImplementation(step1Request);
         }
 
-        for(Asesor step2Entity : globalServicesRepository.assocOperator119()) {
+        for(Asesor step2Entity : globalServicesRepository.assocOperator113()) {
             com.keralty.aeusuarios.viewmodel.asesor.siu.TPOSPROCESOSINCRequest step2Request = new com.keralty.aeusuarios.viewmodel.asesor.siu.TPOSPROCESOSINCRequest();
             step2Request.setAsesorTPOSPROCESOSINCpthisAsesorInstance(step2Entity);
             step2Request.setAsesorTPOSPROCESOSINCpEsDirector(Boolean.FALSE);
@@ -1417,7 +1409,7 @@ public class GlobalServicesService extends AbstractService {
 
         String tCREARAGENTEptpatrUsuarioLDAP = request.getTCREARAGENTEptpatrUsuarioLDAP();
         try {
-            boolean preconditionHolds = tCREARAGENTEptpatrUsuarioLDAP == null || globalServicesRepository.assocOperator121(tCREARAGENTEptpatrUsuarioLDAP).equals(false);
+            boolean preconditionHolds = tCREARAGENTEptpatrUsuarioLDAP == null || globalServicesRepository.assocOperator115(tCREARAGENTEptpatrUsuarioLDAP).equals(false);
             if (!preconditionHolds) throw new PreconditionException("No puede crear el usuario porque ya existe uno con el mismo valor para Usuario LDAP");
         } catch (SystemException e) {
             LoggerFactory.getLogger(this.getClass()).error(e.getMessage());
@@ -1552,7 +1544,7 @@ public class GlobalServicesService extends AbstractService {
         String tMODIFICARAGENTEptpatrUsuarioLDAP = request.getTMODIFICARAGENTEptpatrUsuarioLDAP();
         Funcionario tMODIFICARAGENTEptpthisAgente = request.getTMODIFICARAGENTEptpthisAgenteInstance();
         try {
-            boolean preconditionHolds = tMODIFICARAGENTEptpatrUsuarioLDAP == null || ((globalServicesRepository.assocOperator122(tMODIFICARAGENTEptpatrUsuarioLDAP, tMODIFICARAGENTEptpthisAgente)).equals(Long.valueOf(0)));
+            boolean preconditionHolds = tMODIFICARAGENTEptpatrUsuarioLDAP == null || ((globalServicesRepository.assocOperator116(tMODIFICARAGENTEptpatrUsuarioLDAP, tMODIFICARAGENTEptpthisAgente)).equals(Long.valueOf(0)));
             if (!preconditionHolds) throw new PreconditionException("No puede asignar el valor de Usuario LDAP indicado porque ya existe otro usuario con dicho valor");
         } catch (SystemException e) {
             LoggerFactory.getLogger(this.getClass()).error(e.getMessage());
@@ -1653,7 +1645,7 @@ public class GlobalServicesService extends AbstractService {
         com.keralty.aeusuarios.viewmodel.funcionario.siu.TNEWASESORMANUALResponse step1Response = funcionarioSrv.tNEWASESORMANUALImplementation(step1Request);
         response.setTGNEWASESORAGENCIAoaFuncionarioInstance(step1Response.getFuncionarioTNEWASESORMANUALoaFuncionarioInstance());
 
-        for(Funcionario step2Entity : globalServicesRepository.assocOperator129(tGNEWASESORAGENCIAptpatrUsuario)) {
+        for(Funcionario step2Entity : globalServicesRepository.assocOperator123(tGNEWASESORAGENCIAptpatrUsuario)) {
             com.keralty.aeusuarios.viewmodel.funcionario.siu.ModAsesorAgenciaRequest step2Request = new com.keralty.aeusuarios.viewmodel.funcionario.siu.ModAsesorAgenciaRequest();
             step2Request.setFuncionariomodAsesorAgenciapthisFuncionarioInstance(response.getTGNEWASESORAGENCIAoaFuncionarioInstance());
             step2Request.setFuncionariomodAsesorAgenciapeNumUsuario(tGNEWASESORAGENCIAptpatrUsuario);
@@ -1698,7 +1690,7 @@ public class GlobalServicesService extends AbstractService {
 
         String tGNEWASESORAGENCIAptpatrUsuarioLDAP = request.getTGNEWASESORAGENCIAptpatrUsuarioLDAP();
         try {
-            boolean preconditionHolds = tGNEWASESORAGENCIAptpatrUsuarioLDAP == null || (globalServicesRepository.assocOperator130(tGNEWASESORAGENCIAptpatrUsuarioLDAP)).equals(Long.valueOf(0));
+            boolean preconditionHolds = tGNEWASESORAGENCIAptpatrUsuarioLDAP == null || (globalServicesRepository.assocOperator124(tGNEWASESORAGENCIAptpatrUsuarioLDAP)).equals(Long.valueOf(0));
             if (!preconditionHolds) throw new PreconditionException("No puede asignar el valor de Usuario LDAP indicado porque ya existe otro usuario con dicho valor");
         } catch (SystemException e) {
             LoggerFactory.getLogger(this.getClass()).error(e.getMessage());
@@ -1712,7 +1704,7 @@ public class GlobalServicesService extends AbstractService {
 
         String tGNEWASESORAGENCIAptpatrUsuario = request.getTGNEWASESORAGENCIAptpatrUsuario();
         try {
-            boolean preconditionHolds = globalServicesRepository.assocOperator131(tGNEWASESORAGENCIAptpatrUsuario) > Long.valueOf(0);
+            boolean preconditionHolds = globalServicesRepository.assocOperator125(tGNEWASESORAGENCIAptpatrUsuario) > Long.valueOf(0);
             if (!preconditionHolds) throw new PreconditionException("El número de usuario diligenciado debe corresponderse con un número de asesor existente");
         } catch (SystemException e) {
             LoggerFactory.getLogger(this.getClass()).error(e.getMessage());
@@ -1801,7 +1793,7 @@ public class GlobalServicesService extends AbstractService {
         step1Request.setAsesorTMODIFICARASESORAGENCIAptpVerContratoNovedad(tGMODASESORAGENCIAptpVerContratoNovedad);
         asesorSrv.tMODIFICARASESORAGENCIAImplementation(step1Request);
 
-        for(Funcionario step2Entity : globalServicesRepository.assocOperator132(tGMODASESORAGENCIAptpeNumUsuario)) {
+        for(Funcionario step2Entity : globalServicesRepository.assocOperator126(tGMODASESORAGENCIAptpeNumUsuario)) {
             com.keralty.aeusuarios.viewmodel.funcionario.siu.ModAsesorAgenciaRequest step2Request = new com.keralty.aeusuarios.viewmodel.funcionario.siu.ModAsesorAgenciaRequest();
             step2Request.setFuncionariomodAsesorAgenciapthisFuncionarioInstance(tGMODASESORAGENCIAptpthisAsesor.getFuncionarioFacet());
             step2Request.setFuncionariomodAsesorAgenciapeNumUsuario(tGMODASESORAGENCIAptpeNumUsuario);
@@ -1848,7 +1840,7 @@ public class GlobalServicesService extends AbstractService {
         String tGMODASESORAGENCIAptptUsuarioLDAP = request.getTGMODASESORAGENCIAptptUsuarioLDAP();
         Asesor tGMODASESORAGENCIAptpthisAsesor = request.getTGMODASESORAGENCIAptpthisAsesorInstance();
         try {
-            boolean preconditionHolds = tGMODASESORAGENCIAptptUsuarioLDAP == null || (globalServicesRepository.assocOperator133(tGMODASESORAGENCIAptptUsuarioLDAP, tGMODASESORAGENCIAptpthisAsesor)).equals(Long.valueOf(0));
+            boolean preconditionHolds = tGMODASESORAGENCIAptptUsuarioLDAP == null || (globalServicesRepository.assocOperator127(tGMODASESORAGENCIAptptUsuarioLDAP, tGMODASESORAGENCIAptpthisAsesor)).equals(Long.valueOf(0));
             if (!preconditionHolds) throw new PreconditionException("No puede asignar el valor de Usuario LDAP indicado porque ya existe otro usuario con dicho valor");
         } catch (SystemException e) {
             LoggerFactory.getLogger(this.getClass()).error(e.getMessage());
@@ -1862,7 +1854,7 @@ public class GlobalServicesService extends AbstractService {
 
         String tGMODASESORAGENCIAptpeNumUsuario = request.getTGMODASESORAGENCIAptpeNumUsuario();
         try {
-            boolean preconditionHolds = globalServicesRepository.assocOperator134(tGMODASESORAGENCIAptpeNumUsuario) > Long.valueOf(0);
+            boolean preconditionHolds = globalServicesRepository.assocOperator128(tGMODASESORAGENCIAptpeNumUsuario) > Long.valueOf(0);
             if (!preconditionHolds) throw new PreconditionException("El número de usuario diligenciado debe corresponderse con un número de asesor existente");
         } catch (SystemException e) {
             LoggerFactory.getLogger(this.getClass()).error(e.getMessage());
@@ -1957,30 +1949,16 @@ public class GlobalServicesService extends AbstractService {
         return response;
     }
 
-    /*
-     * Transactional entry point for global service OGCARGAVISASESORES
-     * @param request Service request viewmodel
-     * @return Service response viewmodel with the execution results
-     */
-    @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESResponse oGCARGAVISASESORESTxn(
-            com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESRequest request) throws ModelException, SystemException {
-        return globalServicesSrv.oGCARGAVISASESORESImplementation(request);
-    }
 
-    /*
-     * Implements global service OGCARGAVISASESORES
-     * @param request Service request viewmodel
-     * @return Service response viewmodel with the execution results
-     */
-    @Transactional(Transactional.TxType.REQUIRED)
-    public com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESResponse oGCARGAVISASESORESImplementation(
-            com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESRequest request) throws ModelException, SystemException {
-        com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESResponse response = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAVISASESORESResponse();
-        if (request == null) {
-        	throw new IllegalArgumentException("request cannot be null in OGCARGAVISASESORES");
+
+
+
+    private String sanitizar(String valor) {
+        if (valor == null) {
+            return null;
         }
-        return response;
+        // \R = any line break (\n, \r, \r\n, \u2028, ...). CodeQL recognizes this pattern.
+        return valor.replaceAll("\\R", "_");
     }
 
     /*
@@ -2076,31 +2054,9 @@ public class GlobalServicesService extends AbstractService {
         return response;
     }
 
-    /*
-     * Transactional entry point for global service OGCARGAPLANASESOR
-     * @param request Service request viewmodel
-     * @return Service response viewmodel with the execution results
-     */
-    @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORResponse oGCARGAPLANASESORTxn(
-            com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORRequest request) throws ModelException, SystemException {
-        return globalServicesSrv.oGCARGAPLANASESORImplementation(request);
-    }
 
-    /*
-     * Implements global service OGCARGAPLANASESOR
-     * @param request Service request viewmodel
-     * @return Service response viewmodel with the execution results
-     */
-    @Transactional(Transactional.TxType.REQUIRED)
-    public com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORResponse oGCARGAPLANASESORImplementation(
-            com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORRequest request) throws ModelException, SystemException {
-        com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORResponse response = new com.keralty.aeusuarios.viewmodel.globalservices.siu.OGCARGAPLANASESORResponse();
-        if (request == null) {
-        	throw new IllegalArgumentException("request cannot be null in OGCARGAPLANASESOR");
-        }
-        return response;
-    }
+
+
 
     /*
      * Entry point for global service TGFIJARDATOSSINC
@@ -2147,7 +2103,7 @@ public class GlobalServicesService extends AbstractService {
         /* Action 1: IF (AGENTFuncionario <> NULL) */
         boolean ifCondition1 = (((Funcionario) getAgentInstance(FuncionarioConstants.CLASS_NAME)) != null && !((Funcionario) getAgentInstance(FuncionarioConstants.CLASS_NAME)).isNull());
         if (ifCondition1) {
-            for(FrecuenciaAct step110Entity : globalServicesRepository.assocOperator159(tGFIJARDATOSSINCptNumParametrica)) {
+            for(FrecuenciaAct step110Entity : globalServicesRepository.assocOperator153(tGFIJARDATOSSINCptNumParametrica)) {
                 com.keralty.aeusuarios.viewmodel.frecuenciaact.siu.FijarSincronizacionRequest step10Request = new com.keralty.aeusuarios.viewmodel.frecuenciaact.siu.FijarSincronizacionRequest();
                 step10Request.setFrecuenciaActfijarSincronizacionpthisFrecuenciaActInstance(step110Entity);
                 step10Request.setFrecuenciaActfijarSincronizacionpFechaUltimaSinc(STDFunctions.systemDateFun());
@@ -2160,7 +2116,7 @@ public class GlobalServicesService extends AbstractService {
             /* Action 11: IF (AGENTUsuarioSistemaExterno <> NULL) */
             boolean ifCondition11 = (((UsuarioSistemaExterno) getAgentInstance(UsuarioSistemaExternoConstants.CLASS_NAME)) != null && !((UsuarioSistemaExterno) getAgentInstance(UsuarioSistemaExternoConstants.CLASS_NAME)).isNull());
             if (ifCondition11) {
-                for(FrecuenciaAct step1210Entity : globalServicesRepository.assocOperator160(tGFIJARDATOSSINCptNumParametrica)) {
+                for(FrecuenciaAct step1210Entity : globalServicesRepository.assocOperator154(tGFIJARDATOSSINCptNumParametrica)) {
                     com.keralty.aeusuarios.viewmodel.frecuenciaact.siu.FijarSincronizacionRequest step110Request = new com.keralty.aeusuarios.viewmodel.frecuenciaact.siu.FijarSincronizacionRequest();
                     step110Request.setFrecuenciaActfijarSincronizacionpthisFrecuenciaActInstance(step1210Entity);
                     step110Request.setFrecuenciaActfijarSincronizacionpFechaUltimaSinc(STDFunctions.systemDateFun());
@@ -2170,7 +2126,7 @@ public class GlobalServicesService extends AbstractService {
                     frecuenciaActSrv.fijarSincronizacionImplementation(step110Request);
                 }
             } else {
-                for(FrecuenciaAct step1211Entity : globalServicesRepository.assocOperator161(tGFIJARDATOSSINCptNumParametrica)) {
+                for(FrecuenciaAct step1211Entity : globalServicesRepository.assocOperator155(tGFIJARDATOSSINCptNumParametrica)) {
                     com.keralty.aeusuarios.viewmodel.frecuenciaact.siu.FijarSincronizacionRequest step111Request = new com.keralty.aeusuarios.viewmodel.frecuenciaact.siu.FijarSincronizacionRequest();
                     step111Request.setFrecuenciaActfijarSincronizacionpthisFrecuenciaActInstance(step1211Entity);
                     step111Request.setFrecuenciaActfijarSincronizacionpFechaUltimaSinc(STDFunctions.systemDateFun());

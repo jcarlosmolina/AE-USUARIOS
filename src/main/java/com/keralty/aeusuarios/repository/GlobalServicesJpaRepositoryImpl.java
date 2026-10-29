@@ -1066,14 +1066,14 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
         }
     }
 
-    // AssocOperator: AssocOperator116
+    // AssocOperator: AssocOperator110
 	@Override
-    public Collection<Asesor> assocOperator116(String tGPOSPROCESS1ASESORpUsuario) throws SystemException {
+    public Collection<Asesor> assocOperator110(String tGPOSPROCESS1ASESORpUsuario) throws SystemException {
         try {
             // FOR ALL Asesor WHERE (Asesor.Usuario = pUsuario) DO Asesor.TPOSPROCESOSINC(Asesor, pEsDirector)
-            return assocOperator116Range1(tGPOSPROCESS1ASESORpUsuario);
+            return assocOperator110Range1(tGPOSPROCESS1ASESORpUsuario);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator116, Method: assocOperator116";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator110, Method: assocOperator110";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1081,14 +1081,14 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Collection<Asesor> assocOperator116Range1 (String tGPOSPROCESS1ASESORpUsuario) throws SystemException {
+    public Collection<Asesor> assocOperator110Range1 (String tGPOSPROCESS1ASESORpUsuario) throws SystemException {
 
-        SQLSelect sql = assocOperator116Range1Query(tGPOSPROCESS1ASESORpUsuario);
+        SQLSelect sql = assocOperator110Range1Query(tGPOSPROCESS1ASESORpUsuario);
         return new TypedQueryBuilder<Asesor>(em, Asesor.class).build(sql).execute();
     }
 
 
-    public SQLPopulation assocOperator116Range1Query (String tGPOSPROCESS1ASESORpUsuario) throws SystemException {
+    public SQLPopulation assocOperator110Range1Query (String tGPOSPROCESS1ASESORpUsuario) throws SystemException {
         try {
             SQLPopulation sql = new SQLPopulation("", AsesorConstants.CLASS_NAME);
             SQLWhereConjunction conjunction = new SQLWhereConjunction();
@@ -1109,20 +1109,20 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator116, Method: assocOperator116Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator110, Method: assocOperator110Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
 
-    // AssocOperator: AssocOperator117
+    // AssocOperator: AssocOperator111
 	@Override
-    public Collection<Asesor> assocOperator117() throws SystemException {
+    public Collection<Asesor> assocOperator111() throws SystemException {
         try {
             // FOR ALL Asesor WHERE (Asesor.esDirector = false AND EXIST (Funcionario) WHERE (Funcionario.CodJefe = Asesor.Usuario) = true) DO Asesor.TPOSPROCESOSINC(Asesor, true)
-            return assocOperator117Range1();
+            return assocOperator111Range1();
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator117, Method: assocOperator117";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator111, Method: assocOperator111";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1130,14 +1130,14 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Collection<Asesor> assocOperator117Range1 () throws SystemException {
+    public Collection<Asesor> assocOperator111Range1 () throws SystemException {
 
-        SQLSelect sql = assocOperator117Range1Query();
+        SQLSelect sql = assocOperator111Range1Query();
         return new TypedQueryBuilder<Asesor>(em, Asesor.class).build(sql).execute();
     }
 
 
-    public SQLPopulation assocOperator117Range1Query () throws SystemException {
+    public SQLPopulation assocOperator111Range1Query () throws SystemException {
         try {
             SQLPopulation sql = new SQLPopulation("", AsesorConstants.CLASS_NAME);
             SQLWhereConjunction conjunction = new SQLWhereConjunction();
@@ -1158,25 +1158,25 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
             // EXIST (Funcionario) WHERE (Funcionario.CodJefe = Asesor.Usuario) = true
                 // 'exist' Association operator
-                SQLWhereOperandSubQuery operandSubQueryAssocOperator118 = new SQLWhereOperandSubQuery(assocOperator118Range1Query(sql));
-                conjunction.addOperand(operandSubQueryAssocOperator118);
+                SQLWhereOperandSubQuery operandSubQueryAssocOperator112 = new SQLWhereOperandSubQuery(assocOperator112Range1Query(sql));
+                conjunction.addOperand(operandSubQueryAssocOperator112);
 
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator117, Method: assocOperator117Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator111, Method: assocOperator111Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
-    // AssocOperator: AssocOperator118
+    // AssocOperator: AssocOperator112
 	@Override
-    public Boolean assocOperator118() throws SystemException {
+    public Boolean assocOperator112() throws SystemException {
         try {
             // EXIST (Funcionario) WHERE (Funcionario.CodJefe = Asesor.Usuario)
-            return assocOperator118Range1();
+            return assocOperator112Range1();
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator118, Method: assocOperator118";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator112, Method: assocOperator112";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1184,13 +1184,13 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Boolean assocOperator118Range1 () throws SystemException {
-        SQLExists sql = assocOperator118Range1Query(null);
+    public Boolean assocOperator112Range1 () throws SystemException {
+        SQLExists sql = assocOperator112Range1Query(null);
         return !new TypedQueryBuilder<Funcionario>(em, Funcionario.class).build(sql).execute().isEmpty();
     }
 
 
-    public SQLExists assocOperator118Range1Query (SQLSelect superQuery) throws SystemException {
+    public SQLExists assocOperator112Range1Query (SQLSelect superQuery) throws SystemException {
         try {
             // Path starts with a class in the subquery
             SQLExists sql = new SQLExists(superQuery, "", FuncionarioConstants.CLASS_NAME);
@@ -1213,19 +1213,19 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator118, Method: assocOperator118Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator112, Method: assocOperator112Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
-    // AssocOperator: AssocOperator119
+    // AssocOperator: AssocOperator113
 	@Override
-    public Collection<Asesor> assocOperator119() throws SystemException {
+    public Collection<Asesor> assocOperator113() throws SystemException {
         try {
             // FOR ALL Asesor WHERE (Asesor.esDirector = true AND EXIST (Funcionario) WHERE (Funcionario.CodJefe = Asesor.Usuario) = false) DO Asesor.TPOSPROCESOSINC(Asesor, false)
-            return assocOperator119Range1();
+            return assocOperator113Range1();
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator119, Method: assocOperator119";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator113, Method: assocOperator113";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1233,14 +1233,14 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Collection<Asesor> assocOperator119Range1 () throws SystemException {
+    public Collection<Asesor> assocOperator113Range1 () throws SystemException {
 
-        SQLSelect sql = assocOperator119Range1Query();
+        SQLSelect sql = assocOperator113Range1Query();
         return new TypedQueryBuilder<Asesor>(em, Asesor.class).build(sql).execute();
     }
 
 
-    public SQLPopulation assocOperator119Range1Query () throws SystemException {
+    public SQLPopulation assocOperator113Range1Query () throws SystemException {
         try {
             SQLPopulation sql = new SQLPopulation("", AsesorConstants.CLASS_NAME);
             SQLWhereConjunction conjunction = new SQLWhereConjunction();
@@ -1266,8 +1266,8 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
                 
                     // Operand 1
                     // 'exist' Association operator
-                    SQLWhereOperandSubQuery operandSubQueryAssocOperator120 = new SQLWhereOperandSubQuery(assocOperator118Range1Query(sql));
-                    comparison2.addOperand(operandSubQueryAssocOperator120);
+                    SQLWhereOperandSubQuery operandSubQueryAssocOperator114 = new SQLWhereOperandSubQuery(assocOperator112Range1Query(sql));
+                    comparison2.addOperand(operandSubQueryAssocOperator114);
                     
                     conjunction.addOperand(comparison2);
                 }
@@ -1275,32 +1275,32 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator119, Method: assocOperator119Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator113, Method: assocOperator113Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
-    // AssocOperator: AssocOperator120
+    // AssocOperator: AssocOperator114
 	@Override
-    public Boolean assocOperator120() throws SystemException {
+    public Boolean assocOperator114() throws SystemException {
         try {
             // EXIST (Funcionario) WHERE (Funcionario.CodJefe = Asesor.Usuario)
-            return assocOperator118();
+            return assocOperator112();
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator120, Method: assocOperator120";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator114, Method: assocOperator114";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
 
-    // AssocOperator: AssocOperator121
+    // AssocOperator: AssocOperator115
 	@Override
-    public Boolean assocOperator121(String tCREARAGENTEptpatrUsuarioLDAP) throws SystemException {
+    public Boolean assocOperator115(String tCREARAGENTEptpatrUsuarioLDAP) throws SystemException {
         try {
             // EXIST (Funcionario) WHERE (Funcionario.UsuarioLDAP = pt_p_atrUsuarioLDAP)
-            return assocOperator121Range1(tCREARAGENTEptpatrUsuarioLDAP);
+            return assocOperator115Range1(tCREARAGENTEptpatrUsuarioLDAP);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator121, Method: assocOperator121";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator115, Method: assocOperator115";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1308,13 +1308,13 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Boolean assocOperator121Range1 (String tCREARAGENTEptpatrUsuarioLDAP) throws SystemException {
-        SQLExists sql = assocOperator121Range1Query(tCREARAGENTEptpatrUsuarioLDAP, null);
+    public Boolean assocOperator115Range1 (String tCREARAGENTEptpatrUsuarioLDAP) throws SystemException {
+        SQLExists sql = assocOperator115Range1Query(tCREARAGENTEptpatrUsuarioLDAP, null);
         return !new TypedQueryBuilder<Funcionario>(em, Funcionario.class).build(sql).execute().isEmpty();
     }
 
 
-    public SQLExists assocOperator121Range1Query (String tCREARAGENTEptpatrUsuarioLDAP, SQLSelect superQuery) throws SystemException {
+    public SQLExists assocOperator115Range1Query (String tCREARAGENTEptpatrUsuarioLDAP, SQLSelect superQuery) throws SystemException {
         try {
             SQLExists sql;
             // The path starts with an object
@@ -1345,20 +1345,20 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator121, Method: assocOperator121Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator115, Method: assocOperator115Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
 
-    // AssocOperator: AssocOperator122
+    // AssocOperator: AssocOperator116
 	@Override
-    public Long assocOperator122(String tMODIFICARAGENTEptpatrUsuarioLDAP, Funcionario tMODIFICARAGENTEptpthisAgente) throws SystemException {
+    public Long assocOperator116(String tMODIFICARAGENTEptpatrUsuarioLDAP, Funcionario tMODIFICARAGENTEptpthisAgente) throws SystemException {
         try {
             // COUNT (Funcionario) WHERE (Funcionario.UsuarioLDAP = pt_p_atrUsuarioLDAP AND Funcionario.Id <> pt_p_thisAgente.Id)
-            return assocOperator122Range1(tMODIFICARAGENTEptpatrUsuarioLDAP, tMODIFICARAGENTEptpthisAgente);
+            return assocOperator116Range1(tMODIFICARAGENTEptpatrUsuarioLDAP, tMODIFICARAGENTEptpthisAgente);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator122, Method: assocOperator122";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator116, Method: assocOperator116";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1366,13 +1366,13 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Long assocOperator122Range1 (String tMODIFICARAGENTEptpatrUsuarioLDAP, Funcionario tMODIFICARAGENTEptpthisAgente) throws SystemException {
-        SQLCount sql = assocOperator122Range1Query(tMODIFICARAGENTEptpatrUsuarioLDAP, tMODIFICARAGENTEptpthisAgente, null);
+    public Long assocOperator116Range1 (String tMODIFICARAGENTEptpatrUsuarioLDAP, Funcionario tMODIFICARAGENTEptpthisAgente) throws SystemException {
+        SQLCount sql = assocOperator116Range1Query(tMODIFICARAGENTEptpatrUsuarioLDAP, tMODIFICARAGENTEptpthisAgente, null);
         return Long.valueOf(new TypedQueryBuilder<Funcionario>(em, Funcionario.class).build(sql).execute().size());
     }
 
 
-    public SQLCount assocOperator122Range1Query (String tMODIFICARAGENTEptpatrUsuarioLDAP, Funcionario tMODIFICARAGENTEptpthisAgente, SQLSelect superQuery) throws SystemException {
+    public SQLCount assocOperator116Range1Query (String tMODIFICARAGENTEptpatrUsuarioLDAP, Funcionario tMODIFICARAGENTEptpthisAgente, SQLSelect superQuery) throws SystemException {
         try {
             SQLCount sql;
             // The path starts with an object
@@ -1417,20 +1417,20 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator122, Method: assocOperator122Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator116, Method: assocOperator116Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
 
-    // AssocOperator: AssocOperator129
+    // AssocOperator: AssocOperator123
 	@Override
-    public Collection<Funcionario> assocOperator129(String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException {
+    public Collection<Funcionario> assocOperator123(String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException {
         try {
             // FOR ALL Funcionario WHERE (Funcionario.Usuario = ptpatrUsuario AND Funcionario.Manual = false) DO Funcionario.modAsesorAgencia(oaFuncionario, ptpatrUsuario, Funcionario.CodJefe)
-            return assocOperator129Range1(tGNEWASESORAGENCIAptpatrUsuario);
+            return assocOperator123Range1(tGNEWASESORAGENCIAptpatrUsuario);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator129, Method: assocOperator129";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator123, Method: assocOperator123";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1438,14 +1438,14 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Collection<Funcionario> assocOperator129Range1 (String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException {
+    public Collection<Funcionario> assocOperator123Range1 (String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException {
 
-        SQLSelect sql = assocOperator129Range1Query(tGNEWASESORAGENCIAptpatrUsuario);
+        SQLSelect sql = assocOperator123Range1Query(tGNEWASESORAGENCIAptpatrUsuario);
         return new TypedQueryBuilder<Funcionario>(em, Funcionario.class).build(sql).execute();
     }
 
 
-    public SQLPopulation assocOperator129Range1Query (String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException {
+    public SQLPopulation assocOperator123Range1Query (String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException {
         try {
             SQLPopulation sql = new SQLPopulation("", FuncionarioConstants.CLASS_NAME);
             SQLWhereConjunction conjunction = new SQLWhereConjunction();
@@ -1480,19 +1480,19 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator129, Method: assocOperator129Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator123, Method: assocOperator123Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
-    // AssocOperator: AssocOperator130
+    // AssocOperator: AssocOperator124
 	@Override
-    public Long assocOperator130(String tGNEWASESORAGENCIAptpatrUsuarioLDAP) throws SystemException {
+    public Long assocOperator124(String tGNEWASESORAGENCIAptpatrUsuarioLDAP) throws SystemException {
         try {
             // COUNT (Funcionario) WHERE (Funcionario.UsuarioLDAP = pt_p_atrUsuarioLDAP)
-            return assocOperator130Range1(tGNEWASESORAGENCIAptpatrUsuarioLDAP);
+            return assocOperator124Range1(tGNEWASESORAGENCIAptpatrUsuarioLDAP);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator130, Method: assocOperator130";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator124, Method: assocOperator124";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1500,13 +1500,13 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Long assocOperator130Range1 (String tGNEWASESORAGENCIAptpatrUsuarioLDAP) throws SystemException {
-        SQLCount sql = assocOperator130Range1Query(tGNEWASESORAGENCIAptpatrUsuarioLDAP, null);
+    public Long assocOperator124Range1 (String tGNEWASESORAGENCIAptpatrUsuarioLDAP) throws SystemException {
+        SQLCount sql = assocOperator124Range1Query(tGNEWASESORAGENCIAptpatrUsuarioLDAP, null);
         return Long.valueOf(new TypedQueryBuilder<Funcionario>(em, Funcionario.class).build(sql).execute().size());
     }
 
 
-    public SQLCount assocOperator130Range1Query (String tGNEWASESORAGENCIAptpatrUsuarioLDAP, SQLSelect superQuery) throws SystemException {
+    public SQLCount assocOperator124Range1Query (String tGNEWASESORAGENCIAptpatrUsuarioLDAP, SQLSelect superQuery) throws SystemException {
         try {
             SQLCount sql;
             // The path starts with an object
@@ -1537,19 +1537,19 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator130, Method: assocOperator130Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator124, Method: assocOperator124Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
-    // AssocOperator: AssocOperator131
+    // AssocOperator: AssocOperator125
 	@Override
-    public Long assocOperator131(String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException {
+    public Long assocOperator125(String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException {
         try {
             // COUNT (Funcionario) WHERE (Funcionario.Usuario = pt_p_atrUsuario AND Funcionario.Manual = false)
-            return assocOperator131Range1(tGNEWASESORAGENCIAptpatrUsuario);
+            return assocOperator125Range1(tGNEWASESORAGENCIAptpatrUsuario);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator131, Method: assocOperator131";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator125, Method: assocOperator125";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1557,13 +1557,13 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Long assocOperator131Range1 (String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException {
-        SQLCount sql = assocOperator131Range1Query(tGNEWASESORAGENCIAptpatrUsuario, null);
+    public Long assocOperator125Range1 (String tGNEWASESORAGENCIAptpatrUsuario) throws SystemException {
+        SQLCount sql = assocOperator125Range1Query(tGNEWASESORAGENCIAptpatrUsuario, null);
         return Long.valueOf(new TypedQueryBuilder<Funcionario>(em, Funcionario.class).build(sql).execute().size());
     }
 
 
-    public SQLCount assocOperator131Range1Query (String tGNEWASESORAGENCIAptpatrUsuario, SQLSelect superQuery) throws SystemException {
+    public SQLCount assocOperator125Range1Query (String tGNEWASESORAGENCIAptpatrUsuario, SQLSelect superQuery) throws SystemException {
         try {
             SQLCount sql;
             // The path starts with an object
@@ -1604,20 +1604,20 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator131, Method: assocOperator131Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator125, Method: assocOperator125Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
 
-    // AssocOperator: AssocOperator132
+    // AssocOperator: AssocOperator126
 	@Override
-    public Collection<Funcionario> assocOperator132(String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException {
+    public Collection<Funcionario> assocOperator126(String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException {
         try {
             // FOR ALL Funcionario WHERE (Funcionario.Usuario = ptpeNumUsuario AND Funcionario.Manual = false) DO Funcionario.modAsesorAgencia(ptpthisAsesor, ptpeNumUsuario, Funcionario.CodJefe)
-            return assocOperator132Range1(tGMODASESORAGENCIAptpeNumUsuario);
+            return assocOperator126Range1(tGMODASESORAGENCIAptpeNumUsuario);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator132, Method: assocOperator132";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator126, Method: assocOperator126";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1625,14 +1625,14 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Collection<Funcionario> assocOperator132Range1 (String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException {
+    public Collection<Funcionario> assocOperator126Range1 (String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException {
 
-        SQLSelect sql = assocOperator132Range1Query(tGMODASESORAGENCIAptpeNumUsuario);
+        SQLSelect sql = assocOperator126Range1Query(tGMODASESORAGENCIAptpeNumUsuario);
         return new TypedQueryBuilder<Funcionario>(em, Funcionario.class).build(sql).execute();
     }
 
 
-    public SQLPopulation assocOperator132Range1Query (String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException {
+    public SQLPopulation assocOperator126Range1Query (String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException {
         try {
             SQLPopulation sql = new SQLPopulation("", FuncionarioConstants.CLASS_NAME);
             SQLWhereConjunction conjunction = new SQLWhereConjunction();
@@ -1667,19 +1667,19 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator132, Method: assocOperator132Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator126, Method: assocOperator126Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
-    // AssocOperator: AssocOperator133
+    // AssocOperator: AssocOperator127
 	@Override
-    public Long assocOperator133(String tGMODASESORAGENCIAptptUsuarioLDAP, Asesor tGMODASESORAGENCIAptpthisAsesor) throws SystemException {
+    public Long assocOperator127(String tGMODASESORAGENCIAptptUsuarioLDAP, Asesor tGMODASESORAGENCIAptpthisAsesor) throws SystemException {
         try {
             // COUNT (Funcionario) WHERE (Funcionario.UsuarioLDAP = pt_ptUsuarioLDAP AND Funcionario.Id <> pt_p_thisAsesor.Id)
-            return assocOperator133Range1(tGMODASESORAGENCIAptptUsuarioLDAP, tGMODASESORAGENCIAptpthisAsesor);
+            return assocOperator127Range1(tGMODASESORAGENCIAptptUsuarioLDAP, tGMODASESORAGENCIAptpthisAsesor);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator133, Method: assocOperator133";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator127, Method: assocOperator127";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1687,13 +1687,13 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Long assocOperator133Range1 (String tGMODASESORAGENCIAptptUsuarioLDAP, Asesor tGMODASESORAGENCIAptpthisAsesor) throws SystemException {
-        SQLCount sql = assocOperator133Range1Query(tGMODASESORAGENCIAptptUsuarioLDAP, tGMODASESORAGENCIAptpthisAsesor, null);
+    public Long assocOperator127Range1 (String tGMODASESORAGENCIAptptUsuarioLDAP, Asesor tGMODASESORAGENCIAptpthisAsesor) throws SystemException {
+        SQLCount sql = assocOperator127Range1Query(tGMODASESORAGENCIAptptUsuarioLDAP, tGMODASESORAGENCIAptpthisAsesor, null);
         return Long.valueOf(new TypedQueryBuilder<Funcionario>(em, Funcionario.class).build(sql).execute().size());
     }
 
 
-    public SQLCount assocOperator133Range1Query (String tGMODASESORAGENCIAptptUsuarioLDAP, Asesor tGMODASESORAGENCIAptpthisAsesor, SQLSelect superQuery) throws SystemException {
+    public SQLCount assocOperator127Range1Query (String tGMODASESORAGENCIAptptUsuarioLDAP, Asesor tGMODASESORAGENCIAptpthisAsesor, SQLSelect superQuery) throws SystemException {
         try {
             SQLCount sql;
             // The path starts with an object
@@ -1738,19 +1738,19 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator133, Method: assocOperator133Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator127, Method: assocOperator127Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
-    // AssocOperator: AssocOperator134
+    // AssocOperator: AssocOperator128
 	@Override
-    public Long assocOperator134(String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException {
+    public Long assocOperator128(String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException {
         try {
             // COUNT (Funcionario) WHERE (Funcionario.Usuario = pt_peNumUsuario AND Funcionario.Manual = false)
-            return assocOperator134Range1(tGMODASESORAGENCIAptpeNumUsuario);
+            return assocOperator128Range1(tGMODASESORAGENCIAptpeNumUsuario);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator134, Method: assocOperator134";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator128, Method: assocOperator128";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1758,13 +1758,13 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Long assocOperator134Range1 (String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException {
-        SQLCount sql = assocOperator134Range1Query(tGMODASESORAGENCIAptpeNumUsuario, null);
+    public Long assocOperator128Range1 (String tGMODASESORAGENCIAptpeNumUsuario) throws SystemException {
+        SQLCount sql = assocOperator128Range1Query(tGMODASESORAGENCIAptpeNumUsuario, null);
         return Long.valueOf(new TypedQueryBuilder<Funcionario>(em, Funcionario.class).build(sql).execute().size());
     }
 
 
-    public SQLCount assocOperator134Range1Query (String tGMODASESORAGENCIAptpeNumUsuario, SQLSelect superQuery) throws SystemException {
+    public SQLCount assocOperator128Range1Query (String tGMODASESORAGENCIAptpeNumUsuario, SQLSelect superQuery) throws SystemException {
         try {
             SQLCount sql;
             // The path starts with an object
@@ -1805,20 +1805,20 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator134, Method: assocOperator134Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator128, Method: assocOperator128Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
 
-    // AssocOperator: AssocOperator159
+    // AssocOperator: AssocOperator153
 	@Override
-    public Collection<FrecuenciaAct> assocOperator159(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException {
+    public Collection<FrecuenciaAct> assocOperator153(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException {
         try {
             // FOR ALL FrecuenciaAct WHERE (FrecuenciaAct.Parametrica = ptNumParametrica) DO FrecuenciaAct.fijarSincronizacion(FrecuenciaAct, systemDate(), ptResultado, AGENTFuncionario.Usuario, AGENTFuncionario.drvNombreCompleto)
-            return assocOperator159Range1(tGFIJARDATOSSINCptNumParametrica);
+            return assocOperator153Range1(tGFIJARDATOSSINCptNumParametrica);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator159, Method: assocOperator159";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator153, Method: assocOperator153";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
@@ -1826,14 +1826,14 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
 
 
 
-    public Collection<FrecuenciaAct> assocOperator159Range1 (Long tGFIJARDATOSSINCptNumParametrica) throws SystemException {
+    public Collection<FrecuenciaAct> assocOperator153Range1 (Long tGFIJARDATOSSINCptNumParametrica) throws SystemException {
 
-        SQLSelect sql = assocOperator159Range1Query(tGFIJARDATOSSINCptNumParametrica);
+        SQLSelect sql = assocOperator153Range1Query(tGFIJARDATOSSINCptNumParametrica);
         return new TypedQueryBuilder<FrecuenciaAct>(em, FrecuenciaAct.class).build(sql).execute();
     }
 
 
-    public SQLPopulation assocOperator159Range1Query (Long tGFIJARDATOSSINCptNumParametrica) throws SystemException {
+    public SQLPopulation assocOperator153Range1Query (Long tGFIJARDATOSSINCptNumParametrica) throws SystemException {
         try {
             SQLPopulation sql = new SQLPopulation("", FrecuenciaActConstants.CLASS_NAME);
             SQLWhereConjunction conjunction = new SQLWhereConjunction();
@@ -1854,31 +1854,31 @@ public class GlobalServicesJpaRepositoryImpl extends AbstractRepository implemen
             sql.addOperand(conjunction);
             return sql;
         } catch (Exception e) {
-            String exceptionMessage = "Assoc.Operator: AssocOperator159, Method: assocOperator159Range1Query";
+            String exceptionMessage = "Assoc.Operator: AssocOperator153, Method: assocOperator153Range1Query";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
-    // AssocOperator: AssocOperator160
+    // AssocOperator: AssocOperator154
 	@Override
-    public Collection<FrecuenciaAct> assocOperator160(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException {
+    public Collection<FrecuenciaAct> assocOperator154(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException {
         try {
             // FOR ALL FrecuenciaAct WHERE (FrecuenciaAct.Parametrica = ptNumParametrica) DO FrecuenciaAct.fijarSincronizacion(FrecuenciaAct, systemDate(), ptResultado, AGENTUsuarioSistemaExterno.Login, "")
-            return assocOperator159(tGFIJARDATOSSINCptNumParametrica);
+            return assocOperator153(tGFIJARDATOSSINCptNumParametrica);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator160, Method: assocOperator160";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator154, Method: assocOperator154";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }
     }
-    // AssocOperator: AssocOperator161
+    // AssocOperator: AssocOperator155
 	@Override
-    public Collection<FrecuenciaAct> assocOperator161(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException {
+    public Collection<FrecuenciaAct> assocOperator155(Long tGFIJARDATOSSINCptNumParametrica) throws SystemException {
         try {
             // FOR ALL FrecuenciaAct WHERE (FrecuenciaAct.Parametrica = ptNumParametrica) DO FrecuenciaAct.fijarSincronizacion(FrecuenciaAct, systemDate(), ptResultado, "Auto", "")
-            return assocOperator159(tGFIJARDATOSSINCptNumParametrica);
+            return assocOperator153(tGFIJARDATOSSINCptNumParametrica);
         } catch (Exception e) {
-            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator161, Method: assocOperator161";
+            String exceptionMessage = "Definition Class: GLOBAL, Assoc.Operator: AssocOperator155, Method: assocOperator155";
             org.slf4j.LoggerFactory.getLogger(this.getClass()).error(exceptionMessage);
             throw new SystemException(e, exceptionMessage);
         }

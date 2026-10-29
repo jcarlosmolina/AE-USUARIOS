@@ -253,7 +253,7 @@ public class SeccionP extends AbstractAppEntity {
             value = seccionPdrvUsuarioFDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: SeccionP, Attribute: seccionPdrvUsuarioF");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: SeccionP, Attribute: seccionPdrvUsuarioF");
         }
         return value;
     }
@@ -272,7 +272,7 @@ public class SeccionP extends AbstractAppEntity {
             value = seccionPdrvUsuarioMDerivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: SeccionP, Attribute: seccionPdrvUsuarioM");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: SeccionP, Attribute: seccionPdrvUsuarioM");
         }
         return value;
     }
@@ -291,7 +291,7 @@ public class SeccionP extends AbstractAppEntity {
             value = seccionPdrvUsuarioMas40Derivations();
         } catch (Exception e) {
             value = false;
-            org.slf4j.LoggerFactory.getLogger(this.getClass()).error("Definition Class: SeccionP, Attribute: seccionPdrvUsuarioMas40");
+            org.slf4j.LoggerFactory.getLogger(this.getClass()).debug("Definition Class: SeccionP, Attribute: seccionPdrvUsuarioMas40");
         }
         return value;
     }
