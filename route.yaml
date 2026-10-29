@@ -1,0 +1,21 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: ae-usuarios
+  annotations:
+    haproxy.router.openshift.io/timeout: "3m"
+  labels:
+    app: ae-usuarios
+    app.kubernetes.io/component: ae-usuarios
+    app.kubernetes.io/instance: ae-usuarios
+    app.kubernetes.io/name: ae-usuarios
+    app.kubernetes.io/part-of: ae-app
+    app.openshift.io/runtime: ae-usuarios
+spec:
+  host: ae-usuarios-soporte-colsanitas-dev.apps.rm3.7wse.p1.openshiftapps.com
+  to:
+    kind: Service
+    name: ae-usuarios
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Allow
