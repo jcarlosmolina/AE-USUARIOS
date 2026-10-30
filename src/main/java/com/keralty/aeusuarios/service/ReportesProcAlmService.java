@@ -500,7 +500,7 @@ public class ReportesProcAlmService extends AbstractService {
         if (getAgentRoles().contains(AdminConstants.CLASS_NAME)) return;
         if (getAgentRoles().contains(SuperAdminConstants.CLASS_NAME)) return;
         // COUNT (Funcionarios) WHERE (Funcionarios = agent) > 0
-        Funcionario agentInstance = getAgentFuncionario();
+        //Funcionario agentInstance = getAgentFuncionario();
         // '>' Comparison
         SQLWhereComparison comparison1 = new SQLWhereComparison(sql);
         comparison1.setOperator(">");

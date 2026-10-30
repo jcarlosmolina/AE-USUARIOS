@@ -1227,7 +1227,7 @@ public class GlobalServicesService extends AbstractService {
         ServiceResponse response = new ServiceResponse();
         String tGPOSPROCESS1ASESORpUsuario = request.getTGPOSPROCESS1ASESORpUsuario();
         Boolean tGPOSPROCESS1ASESORpEsDirector = request.getTGPOSPROCESS1ASESORpEsDirector();
-        Rol tGPOSPROCESS1ASESORpRol = request.getTGPOSPROCESS1ASESORpRolInstance();
+        //Rol tGPOSPROCESS1ASESORpRol = request.getTGPOSPROCESS1ASESORpRolInstance();
 
         request.checkArguments();
 
